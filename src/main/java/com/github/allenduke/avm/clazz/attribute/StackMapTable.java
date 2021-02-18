@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StackMapTable extends Attribute_info {
+public class StackMapTable extends AttributeInfo {
 
     private int number;
 
@@ -18,7 +18,7 @@ public class StackMapTable extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
         setNumber(read(2));
         Stack_map_frame[] stack_map_frames = new Stack_map_frame[getNumber()];

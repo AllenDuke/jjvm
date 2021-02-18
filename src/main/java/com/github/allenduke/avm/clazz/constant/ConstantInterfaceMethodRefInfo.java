@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_InterfaceMethodref_info extends CONSTANT {
+public class ConstantInterfaceMethodRefInfo extends ConstantInfo {
 
     private int class_index;
 
@@ -18,8 +18,8 @@ public class CONSTANT_InterfaceMethodref_info extends CONSTANT {
     }
 
     @Override
-    public CONSTANT parse(ClassReader classReader) {
-        CONSTANT_InterfaceMethodref_info constant = new CONSTANT_InterfaceMethodref_info();
+    public ConstantInfo parse(ClassReader classReader) {
+        ConstantInterfaceMethodRefInfo constant = new ConstantInterfaceMethodRefInfo();
         constant.setTag(getTag());
         constant.setClass_index(classReader.readU2());
         constant.setName_and_type_index(classReader.readU2());

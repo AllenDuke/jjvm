@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Deprecated extends Attribute_info {
+public class Deprecated extends AttributeInfo {
 
     @Override
     public String getName() {
@@ -14,7 +14,7 @@ public class Deprecated extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
         if (!getName().equals(getAttribute_name())) {
             throw new RuntimeException("parse source file exception");

@@ -3,7 +3,7 @@ package com.github.allenduke.avm;
 import com.github.allenduke.avm.classpath.Classpath;
 import com.github.allenduke.avm.clazz.ClassFile;
 import com.github.allenduke.avm.clazz.ClassReader;
-import com.github.allenduke.avm.clazz.method.Method_info;
+import com.github.allenduke.avm.clazz.method.MethodInfo;
 
 import java.util.Arrays;
 
@@ -54,7 +54,7 @@ public class Main {
 
             ClassReader reader = new ClassReader(classData);
             ClassFile classFile = reader.parseClassFile();
-            Method_info mainMethod = classFile.getMainMethod();
+            MethodInfo mainMethod = classFile.getMainMethod();
             Interpreter.execute(mainMethod.getCodeAttribute());
             System.out.println("class data:" + Arrays.toString(classData));
         } catch (Exception e) {

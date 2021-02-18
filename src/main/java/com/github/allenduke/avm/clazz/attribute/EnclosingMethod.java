@@ -1,18 +1,18 @@
 package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Class_info;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_NameAndType_info;
+import com.github.allenduke.avm.clazz.constant.ConstantClassInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantNameAndTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class EnclosingMethod extends Attribute_info {
+public class EnclosingMethod extends AttributeInfo {
 
-    private CONSTANT_Class_info clazz;
+    private ConstantClassInfo clazz;
 
-    private CONSTANT_NameAndType_info method;
+    private ConstantNameAndTypeInfo method;
 
     @Override
     public String getName() {
@@ -29,13 +29,13 @@ public class EnclosingMethod extends Attribute_info {
         }
         int clazz_index = read(2);
 
-        CONSTANT_Class_info constant_class_info = (CONSTANT_Class_info) classFile.getConstantPool()[clazz_index];
+        ConstantClassInfo constant_class_info = (ConstantClassInfo) classFile.getConstantPool()[clazz_index];
         setClazz(constant_class_info);
         int method_index = read(2);
         if (method_index == 0) {
             setMethod(null);
         } else {
-            CONSTANT_NameAndType_info constant_nameAndType_info = (CONSTANT_NameAndType_info) classFile.getConstantPool()[method_index];
+            ConstantNameAndTypeInfo constant_nameAndType_info = (ConstantNameAndTypeInfo) classFile.getConstantPool()[method_index];
             setMethod(constant_nameAndType_info);
         }
         return this;

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SourceFileDebugExtension extends Attribute_info {
+public class SourceFileDebugExtension extends AttributeInfo {
 
     private String debug_extension;
 

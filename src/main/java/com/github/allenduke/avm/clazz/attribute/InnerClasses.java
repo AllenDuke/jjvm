@@ -2,14 +2,14 @@ package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
 import com.github.allenduke.avm.clazz.ClassReader;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Class_info;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Utf8_info;
+import com.github.allenduke.avm.clazz.constant.ConstantClassInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantUtf8Info;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class InnerClasses extends Attribute_info {
+public class InnerClasses extends AttributeInfo {
 
     private int number;
 
@@ -21,7 +21,7 @@ public class InnerClasses extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         if (!getName().equals(getAttribute_name())) {
             throw new RuntimeException("parse source file exception");
         }
@@ -30,15 +30,15 @@ public class InnerClasses extends Attribute_info {
         Clazz[] clazzes = new Clazz[getNumber()];
         for (int i = 0; i < clazzes.length; i++) {
             Clazz clazz = new Clazz();
-            CONSTANT_Class_info inner = (CONSTANT_Class_info) classFile.getConstantPool()[read(2)];
+            ConstantClassInfo inner = (ConstantClassInfo) classFile.getConstantPool()[read(2)];
             clazz.setInner_class_info(inner);
-            CONSTANT_Class_info outer = (CONSTANT_Class_info) classFile.getConstantPool()[read(2)];
+            ConstantClassInfo outer = (ConstantClassInfo) classFile.getConstantPool()[read(2)];
             clazz.setOuter_class_info(outer);
             int read = read(2);
             if (read == 0)
                 clazz.setInner_name(null);
             else {
-                CONSTANT_Utf8_info inner_name = (CONSTANT_Utf8_info) classFile.getConstantPool()[read];
+                ConstantUtf8Info inner_name = (ConstantUtf8Info) classFile.getConstantPool()[read];
                 clazz.setInner_name(inner_name);
             }
             byte[] bytes = readBytes(2);
@@ -119,11 +119,11 @@ public class InnerClasses extends Attribute_info {
     @Setter
     class Clazz {
 
-        private CONSTANT_Class_info inner_class_info;
+        private ConstantClassInfo inner_class_info;
 
-        private CONSTANT_Class_info outer_class_info;
+        private ConstantClassInfo outer_class_info;
 
-        private CONSTANT_Utf8_info inner_name;
+        private ConstantUtf8Info inner_name;
 
         private String inner_class_access_flag;
 

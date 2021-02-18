@@ -1,13 +1,13 @@
 package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Utf8_info;
+import com.github.allenduke.avm.clazz.constant.ConstantUtf8Info;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RuntimeVisibleAnnotations extends Attribute_info {
+public class RuntimeVisibleAnnotations extends AttributeInfo {
 
     private int num_annotations;
 
@@ -19,7 +19,7 @@ public class RuntimeVisibleAnnotations extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
         if (!getName().equals(getAttribute_name())) {
             throw new RuntimeException("parse source file exception");
@@ -28,13 +28,13 @@ public class RuntimeVisibleAnnotations extends Attribute_info {
         Annotation[] annotations = new Annotation[getNum_annotations()];
         for (int i = 0; i < getNum_annotations(); i++) {
             Annotation annotation = new Annotation();
-            CONSTANT_Utf8_info constant_utf8_info = (CONSTANT_Utf8_info) classFile.getConstantPool()[read(2)];
+            ConstantUtf8Info constant_utf8_info = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
             annotation.setType(constant_utf8_info.parseString());
             annotation.setNum(read(2));
             Annotation_element[] annotation_elements = new Annotation_element[annotation.getNum()];
             for (int j = 0; j < annotation_elements.length; j++) {
                 Annotation_element annotation_element = new Annotation_element();
-                CONSTANT_Utf8_info constant_utf8_info1 = (CONSTANT_Utf8_info) classFile.getConstantPool()[read(2)];
+                ConstantUtf8Info constant_utf8_info1 = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
                 annotation_element.setElement_name(constant_utf8_info.parseString());
                 Element_value element_value = new Element_value();
                 //TODO

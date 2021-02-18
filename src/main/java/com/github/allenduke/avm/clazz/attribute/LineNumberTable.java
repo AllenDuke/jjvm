@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LineNumberTable extends Attribute_info {
+public class LineNumberTable extends AttributeInfo {
 
     private int line_number_table_length;
 
@@ -18,7 +18,7 @@ public class LineNumberTable extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
         line_number_table_length = read(2);
         Line_number_table[] line_number_tables = new Line_number_table[line_number_table_length];

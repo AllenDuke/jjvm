@@ -6,21 +6,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_Float_info extends CONSTANT {
+public class ConstantStringInfo extends ConstantInfo {
 
-
-    private int value;
+    private int string_index;
 
     @Override
     public int getTag() {
-        return 4;
+        return 8;
     }
 
     @Override
-    public CONSTANT parse(ClassReader classReader) {
-        CONSTANT_Float_info constant = new CONSTANT_Float_info();
+    public ConstantInfo parse(ClassReader classReader) {
+        ConstantStringInfo constant = new ConstantStringInfo();
         constant.setTag(getTag());
-        constant.setValue(classReader.readU4Int());
+        constant.setString_index(classReader.readU2());
         return constant;
     }
 }

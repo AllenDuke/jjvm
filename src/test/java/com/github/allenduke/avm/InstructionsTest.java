@@ -1,9 +1,8 @@
 package com.github.allenduke.avm;
 
-import com.github.allenduke.avm.Interpreter;
 import com.github.allenduke.avm.clazz.ClassFile;
 import com.github.allenduke.avm.clazz.ClassReader;
-import com.github.allenduke.avm.clazz.method.Method_info;
+import com.github.allenduke.avm.clazz.method.MethodInfo;
 import org.junit.Test;
 
 import java.nio.file.Files;
@@ -22,7 +21,7 @@ public class InstructionsTest {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         ClassReader classReader = new ClassReader(bytes);
         ClassFile classFile = classReader.parseClassFile();
-        Method_info mainMethod = classFile.getMainMethod();
+        MethodInfo mainMethod = classFile.getMainMethod();
         Interpreter.execute(mainMethod.getCodeAttribute());
     }
 }

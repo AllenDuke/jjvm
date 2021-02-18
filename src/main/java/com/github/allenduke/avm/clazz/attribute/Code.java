@@ -1,13 +1,13 @@
 package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Utf8_info;
+import com.github.allenduke.avm.clazz.constant.ConstantUtf8Info;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Code extends Attribute_info {
+public class Code extends AttributeInfo {
     //U2
     private int max_stack;
     //U2
@@ -23,7 +23,7 @@ public class Code extends Attribute_info {
     //U2
     private int attributes_count;
 
-    private Attribute_info[] attributes;
+    private AttributeInfo[] attributes;
 
     @Override
     public String getName() {
@@ -53,11 +53,11 @@ public class Code extends Attribute_info {
         }
         this.setException_table(exception_tables);
         attributes_count = read(2);
-        Attribute_info[] attribute_infos = new Attribute_info[attributes_count];
+        AttributeInfo[] attribute_infos = new AttributeInfo[attributes_count];
         for (int i = 0; i < attributes_count; i++) {
             int pool_index = read(2);
-            CONSTANT_Utf8_info attributeName = (CONSTANT_Utf8_info) classFile.getConstantPool()[pool_index];
-            Attribute_info attribute_info = Attribute_info.getInstance(attributeName.parseString());
+            ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[pool_index];
+            AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
             attribute_info.setAttribute_name(attributeName.parseString());
             int u4 = read(4);
             attribute_info.setAttribute_length(u4);

@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 @Getter
 @Setter
-public abstract class Attribute_info {
+public abstract class AttributeInfo {
 
     private String attribute_name;
 
@@ -20,9 +20,9 @@ public abstract class Attribute_info {
 
     public abstract String getName();
 
-    public abstract Attribute_info parseAttribute(ClassFile classFile);
+    public abstract AttributeInfo parseAttribute(ClassFile classFile);
 
-    private static HashMap<String, Attribute_info> map = new HashMap<>();
+    private static HashMap<String, AttributeInfo> map = new HashMap<>();
 
     static {
         Code code = new Code();
@@ -61,7 +61,7 @@ public abstract class Attribute_info {
 
     }
 
-    public static Attribute_info getInstance(String attribute_name) {
+    public static AttributeInfo getInstance(String attribute_name) {
         return map.get(attribute_name);
     }
 

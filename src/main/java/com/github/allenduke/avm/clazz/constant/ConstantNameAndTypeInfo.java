@@ -6,19 +6,23 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_MethodType_info extends CONSTANT {
+public class ConstantNameAndTypeInfo extends ConstantInfo {
+
+
+    private int name_index;
 
     private int descriptor_index;
 
     @Override
     public int getTag() {
-        return 16;
+        return 12;
     }
 
     @Override
-    public CONSTANT parse(ClassReader classReader) {
-        CONSTANT_MethodType_info constant = new CONSTANT_MethodType_info();
+    public ConstantInfo parse(ClassReader classReader) {
+        ConstantNameAndTypeInfo constant = new ConstantNameAndTypeInfo();
         constant.setTag(getTag());
+        constant.setName_index(classReader.readU2());
         constant.setDescriptor_index(classReader.readU2());
         return constant;
     }

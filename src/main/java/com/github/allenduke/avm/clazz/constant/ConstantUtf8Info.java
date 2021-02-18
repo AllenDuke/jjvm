@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_Utf8_info extends CONSTANT {
+public class ConstantUtf8Info extends ConstantInfo {
 
   private int length;
 
@@ -18,8 +18,8 @@ public class CONSTANT_Utf8_info extends CONSTANT {
   }
 
   @Override
-  public CONSTANT parse(ClassReader classReader) {
-    CONSTANT_Utf8_info constant = new CONSTANT_Utf8_info();
+  public ConstantInfo parse(ClassReader classReader) {
+    ConstantUtf8Info constant = new ConstantUtf8Info();
     constant.setTag(getTag());
     constant.setLength(classReader.readU2());
       byte[] bs = new byte[constant.getLength()];

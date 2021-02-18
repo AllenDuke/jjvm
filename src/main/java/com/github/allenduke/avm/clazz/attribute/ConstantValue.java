@@ -1,15 +1,15 @@
 package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
-import com.github.allenduke.avm.clazz.constant.CONSTANT;
+import com.github.allenduke.avm.clazz.constant.ConstantInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ConstantValue extends Attribute_info {
+public class ConstantValue extends AttributeInfo {
 
-    private CONSTANT constant_value;
+    private ConstantInfo constantInfo;
 
     @Override
     public String getName() {
@@ -17,7 +17,7 @@ public class ConstantValue extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
         if (!getName().equals(getAttribute_name())) {
             throw new RuntimeException("parse source file exception");
@@ -26,8 +26,8 @@ public class ConstantValue extends Attribute_info {
             throw new RuntimeException("parse source file exception");
         }
         int pool_index = read(2);
-        CONSTANT constant = classFile.getConstantPool()[pool_index];
-        setConstant_value(constant);
+        ConstantInfo constant = classFile.getConstantPool()[pool_index];
+        setConstantInfo(constant);
         return this;
     }
 }

@@ -2,13 +2,13 @@ package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
 import com.github.allenduke.avm.clazz.ClassReader;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Utf8_info;
+import com.github.allenduke.avm.clazz.constant.ConstantUtf8Info;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class SourceFile extends Attribute_info {
+public class SourceFile extends AttributeInfo {
 
   private String source_file;
 
@@ -29,7 +29,7 @@ public class SourceFile extends Attribute_info {
       throw new RuntimeException("parse source file exception");
     }
     int index = ClassReader.bytesToInt(this.getInfo());
-    CONSTANT_Utf8_info constant_utf8_info = (CONSTANT_Utf8_info) classFile.getConstantPool()[index];
+    ConstantUtf8Info constant_utf8_info = (ConstantUtf8Info) classFile.getConstantPool()[index];
     this.setSource_file(constant_utf8_info.parseString());
     return this;
   }

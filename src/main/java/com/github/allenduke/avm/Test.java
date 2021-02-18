@@ -8,6 +8,6 @@ package com.github.allenduke.avm;
  */
 public class Test {
     public static void main(String[] args) {
-        System.out.println("hello");
+        System.out.println(Integer.toBinaryString(0x1234)+" "+Integer.toHexString(0x1234));
     }
 }

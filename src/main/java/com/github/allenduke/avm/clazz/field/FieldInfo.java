@@ -1,13 +1,13 @@
 package com.github.allenduke.avm.clazz.field;
 
-import com.github.allenduke.avm.clazz.attribute.Attribute_info;
+import com.github.allenduke.avm.clazz.attribute.AttributeInfo;
 import com.github.allenduke.avm.clazz.attribute.Code;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Field_info {
+public class FieldInfo {
 
     //U2
     private String access_flag;
@@ -20,7 +20,7 @@ public class Field_info {
 
     private int attributes_count;
 
-    private Attribute_info[] attributes;
+    private AttributeInfo[] attributes;
 
 
     public String accessFlagsToString(String s) {
@@ -80,7 +80,7 @@ public class Field_info {
     }
 
     public Code getCodeAttribute() {
-        for (Attribute_info attribute_info : attributes) {
+        for (AttributeInfo attribute_info : attributes) {
             if (attribute_info instanceof Code) {
                 return (Code) attribute_info;
             }

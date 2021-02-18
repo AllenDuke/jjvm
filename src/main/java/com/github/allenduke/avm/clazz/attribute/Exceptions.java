@@ -1,17 +1,17 @@
 package com.github.allenduke.avm.clazz.attribute;
 
 import com.github.allenduke.avm.clazz.ClassFile;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Class_info;
+import com.github.allenduke.avm.clazz.constant.ConstantClassInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class Exceptions extends Attribute_info {
+public class Exceptions extends AttributeInfo {
 
     private int number;
 
-    private CONSTANT_Class_info[] exceptions;
+    private ConstantClassInfo[] exceptions;
 
     @Override
     public String getName() {
@@ -19,15 +19,15 @@ public class Exceptions extends Attribute_info {
     }
 
     @Override
-    public Attribute_info parseAttribute(ClassFile classFile) {
+    public AttributeInfo parseAttribute(ClassFile classFile) {
         if (!getName().equals(getAttribute_name())) {
             throw new RuntimeException("parse source file exception");
         }
         setIndex(0);
         setNumber(read(2));
-        CONSTANT_Class_info[] constant_class_infos = new CONSTANT_Class_info[getNumber()];
+        ConstantClassInfo[] constant_class_infos = new ConstantClassInfo[getNumber()];
         for (int i = 0; i < constant_class_infos.length; i++) {
-            CONSTANT_Class_info constant_class_info = (CONSTANT_Class_info) classFile.getConstantPool()[read(2)];
+            ConstantClassInfo constant_class_info = (ConstantClassInfo) classFile.getConstantPool()[read(2)];
             exceptions[i] = constant_class_info;
         }
         setExceptions(constant_class_infos);

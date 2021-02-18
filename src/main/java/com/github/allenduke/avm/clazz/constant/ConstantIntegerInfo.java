@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_Inter_info extends CONSTANT {
+public class ConstantIntegerInfo extends ConstantInfo {
 
     private int value;
 
@@ -16,8 +16,8 @@ public class CONSTANT_Inter_info extends CONSTANT {
     }
 
     @Override
-    public CONSTANT parse(ClassReader classReader) {
-        CONSTANT_Inter_info constant = new CONSTANT_Inter_info();
+    public ConstantInfo parse(ClassReader classReader) {
+        ConstantIntegerInfo constant = new ConstantIntegerInfo();
         constant.setTag(getTag());
         constant.setValue(classReader.readU4Int());
         return constant;

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_Long_info extends CONSTANT {
+public class ConstantDoubleInfo extends ConstantInfo {
 
     private int high_bytes;
 
@@ -14,19 +14,15 @@ public class CONSTANT_Long_info extends CONSTANT {
 
     @Override
     public int getTag() {
-        return 5;
+        return 6;
     }
 
     @Override
-    public CONSTANT parse(ClassReader classReader) {
-        CONSTANT_Long_info constant = new CONSTANT_Long_info();
+    public ConstantInfo parse(ClassReader classReader) {
+        ConstantDoubleInfo constant = new ConstantDoubleInfo();
         constant.setTag(getTag());
         constant.setHigh_bytes(classReader.readU4Int());
         constant.setLow_bytes(classReader.readU4Int());
         return constant;
-    }
-
-    public long toLong() {
-        return ((long) high_bytes << 32) + low_bytes;
     }
 }

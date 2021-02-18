@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MethodParameters extends Attribute_info {
+public class MethodParameters extends AttributeInfo {
 
   @Override
   public String getName() {

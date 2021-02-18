@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CONSTANT_Fieldref extends CONSTANT {
+public class ConstantFieldRef extends ConstantInfo {
 
     private int class_index;
 
@@ -18,8 +18,8 @@ public class CONSTANT_Fieldref extends CONSTANT {
     }
 
     @Override
-    public CONSTANT parse(ClassReader classReader) {
-        CONSTANT_Fieldref constant = new CONSTANT_Fieldref();
+    public ConstantInfo parse(ClassReader classReader) {
+        ConstantFieldRef constant = new ConstantFieldRef();
         constant.setTag(getTag());
         constant.setClass_index(classReader.readU2());
         constant.setName_and_type_index(classReader.readU2());

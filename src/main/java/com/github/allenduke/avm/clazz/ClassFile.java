@@ -1,51 +1,72 @@
 package com.github.allenduke.avm.clazz;
 
-import com.github.allenduke.avm.clazz.attribute.Attribute_info;
-import com.github.allenduke.avm.clazz.constant.CONSTANT;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Utf8_info;
-import com.github.allenduke.avm.clazz.field.Field_info;
-import com.github.allenduke.avm.clazz.method.Method_info;
+import com.github.allenduke.avm.clazz.attribute.AttributeInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantUtf8Info;
+import com.github.allenduke.avm.clazz.field.FieldInfo;
+import com.github.allenduke.avm.clazz.method.MethodInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+/* class文件大端的形式（高位在低地址） */
+/*
+ClassFile {
+    u4             magic;
+    u2             minor_version;
+    u2             major_version;
+    u2             constant_pool_count;
+    cp_info        constant_pool[constant_pool_count-1];
+    u2             access_flags;
+    u2             this_class;
+    u2             super_class;
+    u2             interfaces_count;
+    u2             interfaces[interfaces_count];
+    u2             fields_count;
+    field_info     fields[fields_count];
+    u2             methods_count;
+    method_info    methods[methods_count];
+    u2             attributes_count;
+    attribute_info attributes[attributes_count];
+}
+*/
 public class ClassFile {
 
-    private String magic;
+    private String magic;                       /* 魔数，4字节，0xcafebabe */
 
-    private int minorVersion;
+    private int minorVersion;                   /* 次版本号, u2 */
 
-    private int majorVersion;
+    private int majorVersion;                   /* 主版本号, u2 */
 
-    private int constantPoolCount;
+    private int constantPoolCount;              /* 常量数量 */
 
-    private CONSTANT[] constantPool;
+    private ConstantInfo[] constantPool;            /* 常量池 */
 
-    private String accessFlags;
+    private String accessFlags;                 /* 类访问标志，类 接口 public private, 16bit */
 
-    private String thisClass;
+    private String thisClass;                   /* 类名在常量池中的索引, u2 */
 
-    private String superClass;
+    private String superClass;                  /* 父类名在常量池中的索引, u2 */
 
-    private int interfacesCount;
+    private int interfacesCount;                /* 接口数量 */
 
-    private CONSTANT_Utf8_info[] interfaces;
+    private ConstantUtf8Info[] interfaces;    /* 接口表，接口名在常量池中的索引 */
 
-    private int fieldsCount;
+    private int fieldsCount;                    /* 字段数量 */
 
-    private Field_info[] fields;
+    private FieldInfo[] fields;                /* 字段表 */
 
-    private int methodsCount;
+    private int methodsCount;                   /* 方法数量 */
 
-    private Method_info[] methods;
+    private MethodInfo[] methods;              /* 方法表 */
 
-    private int attributesCount;
+    private int attributesCount;                /* 属性数量 */
 
-    private Attribute_info[] attributes;
+    private AttributeInfo[] attributes;        /* 属性表 */
 
-    public Method_info getMainMethod() {
-        for (Method_info m : methods) {
+    public MethodInfo getMainMethod() {
+        for (MethodInfo m : methods) {
 
             if ("main".equals(m.getName()) && "([Ljava/lang/String;)V".equals(m.getDescriptor())) {
                 return m;

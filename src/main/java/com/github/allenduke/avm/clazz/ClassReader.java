@@ -1,17 +1,18 @@
 package com.github.allenduke.avm.clazz;
 
-import com.github.allenduke.avm.clazz.attribute.Attribute_info;
-import com.github.allenduke.avm.clazz.constant.CONSTANT;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Class_info;
-import com.github.allenduke.avm.clazz.constant.CONSTANT_Utf8_info;
-import com.github.allenduke.avm.clazz.field.Field_info;
-import com.github.allenduke.avm.clazz.method.Method_info;
+import com.github.allenduke.avm.clazz.attribute.AttributeInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantClassInfo;
+import com.github.allenduke.avm.clazz.constant.ConstantUtf8Info;
+import com.github.allenduke.avm.clazz.field.FieldInfo;
+import com.github.allenduke.avm.clazz.method.MethodInfo;
 
 import java.util.Arrays;
 
+/* 从一个class文件中读取数据 */
 public class ClassReader {
 
-    private int pos;
+    private int pos;        /* 记录当前要处理的下表 */
 
     private byte[] bytes;
 
@@ -23,7 +24,7 @@ public class ClassReader {
     public ClassFile parseClassFile() {
         ClassFile classFile = new ClassFile();
         parseMagic(classFile);
-        parseMinOrVersion(classFile);
+        parseMinorVersion(classFile);
         parseMajorVersion(classFile);
         parseConstantPoolCount(classFile);
         parseConstantPool(classFile);
@@ -42,10 +43,10 @@ public class ClassReader {
     }
 
     private void parseAttributes(ClassFile classFile) {
-        Attribute_info[] attribute_infos = new Attribute_info[classFile.getAttributesCount()];
+        AttributeInfo[] attribute_infos = new AttributeInfo[classFile.getAttributesCount()];
         for (int i = 0; i < attribute_infos.length; i++) {
-            CONSTANT_Utf8_info attributeName = (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
-            Attribute_info attribute_info = Attribute_info.getInstance(attributeName.parseString());
+            ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
+            AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
             attribute_info.setAttribute_name(attributeName.parseString());
             int u4 = readU4Int();
             attribute_info.setAttribute_length(u4);
@@ -60,9 +61,9 @@ public class ClassReader {
     }
 
     private void parseMethods(ClassFile classFile) {
-        Method_info[] method_infos = new Method_info[classFile.getMethodsCount()];
+        MethodInfo[] method_infos = new MethodInfo[classFile.getMethodsCount()];
         for (int i = 0; i < method_infos.length; i++) {
-            Method_info method_info = new Method_info();
+            MethodInfo method_info = new MethodInfo();
             String s = toHexString(readU2Byte());
             if (s.length() < 4) {
                 for (; 0 < 4 - s.length(); ) {
@@ -70,19 +71,19 @@ public class ClassReader {
                 }
             }
             method_info.setAccess_flag(method_info.accessFlagsToString(s));
-            CONSTANT_Utf8_info constant_utf8_info =
-                    (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
+            ConstantUtf8Info constant_utf8_info =
+                    (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             method_info.setName(constant_utf8_info.parseString());
-            CONSTANT_Utf8_info constant_utf8_info2 =
-                    (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
+            ConstantUtf8Info constant_utf8_info2 =
+                    (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             method_info.setDescriptor(constant_utf8_info2.parseString());
             int attribute_count = readU2();
             method_info.setAttributes_count(attribute_count);
 
-            Attribute_info[] attribute_infos = new Attribute_info[attribute_count];
+            AttributeInfo[] attribute_infos = new AttributeInfo[attribute_count];
             for (int j = 0; j < attribute_count; j++) {
-                CONSTANT_Utf8_info attributeName = (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
-                Attribute_info attribute_info = Attribute_info.getInstance(attributeName.parseString());
+                ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
+                AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
                 attribute_info.setAttribute_name(attributeName.parseString());
                 int u4 = readU4Int();
                 attribute_info.setAttribute_length(u4);
@@ -100,9 +101,9 @@ public class ClassReader {
     }
 
     private void parseFields(ClassFile classFile) {
-        Field_info[] field_infos = new Field_info[classFile.getFieldsCount()];
+        FieldInfo[] field_infos = new FieldInfo[classFile.getFieldsCount()];
         for (int i = 0; i < field_infos.length; i++) {
-            Field_info field_info = new Field_info();
+            FieldInfo field_info = new FieldInfo();
             String s = toHexString(readU2Byte());
             if (s.length() < 4) {
                 for (; 0 < 4 - s.length(); ) {
@@ -110,19 +111,19 @@ public class ClassReader {
                 }
             }
             field_info.setAccess_flag(field_info.accessFlagsToString(s));
-            CONSTANT_Utf8_info constant_utf8_info =
-                    (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
+            ConstantUtf8Info constant_utf8_info =
+                    (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             field_info.setName(constant_utf8_info.parseString());
-            CONSTANT_Utf8_info constant_utf8_info2 =
-                    (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
+            ConstantUtf8Info constant_utf8_info2 =
+                    (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             field_info.setDescriptor(constant_utf8_info2.parseString());
             int attribute_count = readU2();
             field_info.setAttributes_count(attribute_count);
 
-            Attribute_info[] attribute_infos = new Attribute_info[attribute_count];
+            AttributeInfo[] attribute_infos = new AttributeInfo[attribute_count];
             for (int j = 0; j < attribute_count; j++) {
-                CONSTANT_Utf8_info attributeName = (CONSTANT_Utf8_info) classFile.getConstantPool()[readU2()];
-                Attribute_info attribute_info = Attribute_info.getInstance(attributeName.parseString());
+                ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
+                AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
                 attribute_info.setAttribute_name(attributeName.parseString());
                 int u4 = readU4Int();
                 attribute_info.setAttribute_length(u4);
@@ -140,12 +141,12 @@ public class ClassReader {
     }
 
     private void parseInterfaces(ClassFile classFile) {
-        CONSTANT_Utf8_info[] infos = new CONSTANT_Utf8_info[classFile.getInterfacesCount()];
+        ConstantUtf8Info[] infos = new ConstantUtf8Info[classFile.getInterfacesCount()];
         for (int i = 0; i < classFile.getInterfacesCount(); i++) {
-            CONSTANT_Class_info constant_class_info =
-                    (CONSTANT_Class_info) classFile.getConstantPool()[readU2()];
-            CONSTANT_Utf8_info constant_utf8_info =
-                    (CONSTANT_Utf8_info) classFile.getConstantPool()[constant_class_info.getName_index()];
+            ConstantClassInfo constant_class_info =
+                    (ConstantClassInfo) classFile.getConstantPool()[readU2()];
+            ConstantUtf8Info constant_utf8_info =
+                    (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getName_index()];
             infos[i] = constant_utf8_info;
         }
         classFile.setInterfaces(infos);
@@ -156,10 +157,10 @@ public class ClassReader {
     }
 
     private void parseThisClass(ClassFile classFile) {
-        CONSTANT_Class_info constant_class_info =
-                (CONSTANT_Class_info) classFile.getConstantPool()[readU2()];
-        CONSTANT_Utf8_info constant_utf8_info =
-                (CONSTANT_Utf8_info) classFile.getConstantPool()[constant_class_info.getName_index()];
+        ConstantClassInfo constant_class_info =
+                (ConstantClassInfo) classFile.getConstantPool()[readU2()];
+        ConstantUtf8Info constant_utf8_info =
+                (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getName_index()];
         classFile.setThisClass(constant_utf8_info.parseString());
     }
 
@@ -169,10 +170,10 @@ public class ClassReader {
             classFile.setSuperClass("Object");
             return;
         }
-        CONSTANT_Class_info constant_class_info =
-                (CONSTANT_Class_info) classFile.getConstantPool()[index];
-        CONSTANT_Utf8_info constant_utf8_info =
-                (CONSTANT_Utf8_info) classFile.getConstantPool()[constant_class_info.getName_index()];
+        ConstantClassInfo constant_class_info =
+                (ConstantClassInfo) classFile.getConstantPool()[index];
+        ConstantUtf8Info constant_utf8_info =
+                (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getName_index()];
         classFile.setSuperClass(constant_utf8_info.parseString());
     }
 
@@ -241,11 +242,11 @@ public class ClassReader {
 
     private void parseConstantPool(ClassFile classFile) {
         int count = classFile.getConstantPoolCount();
-        CONSTANT[] cpInfos = new CONSTANT[count];
+        ConstantInfo[] cpInfos = new ConstantInfo[count];
         cpInfos[0] = null;
         for (int i = 1; i < count; i++) {
             int tag = readU1();
-            cpInfos[i] = CONSTANT.parseConstant(tag, this);
+            cpInfos[i] = ConstantInfo.parseConstant(tag, this);
         }
         classFile.setConstantPool(cpInfos);
     }
@@ -258,7 +259,7 @@ public class ClassReader {
         classFile.setMajorVersion(readU2());
     }
 
-    private void parseMinOrVersion(ClassFile classFile) {
+    private void parseMinorVersion(ClassFile classFile) {
         classFile.setMinorVersion(readU2());
     }
 
@@ -284,6 +285,7 @@ public class ClassReader {
         return b;
     }
 
+    // todo 更换 short
     public int readU2() {
         byte[] bytes = Arrays.copyOfRange(this.bytes, pos, pos + 2);
         pos += 2;
@@ -318,6 +320,10 @@ public class ClassReader {
 
     public static String toHexString(byte[] bytes) {
         StringBuilder builder = new StringBuilder();
+        /**
+         * 在java中，不支持无符号数。
+         * 栈上的数据4字节一个单位，所以byte也是4字节的，按int来处理，高24位用符号位填充。
+         */
         for (byte b : bytes) {
             builder.append(Integer.toHexString(b & 0xFF));
         }
