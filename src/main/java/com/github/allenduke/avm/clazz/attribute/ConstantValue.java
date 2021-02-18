@@ -19,10 +19,10 @@ public class ConstantValue extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        if (!getName().equals(getAttribute_name())) {
+        if (!getName().equals(getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        if (2 != getInfo().length || 2 != getAttribute_length()) {
+        if (2 != getInfo().length || 2 != getAttributeLength()) {
             throw new RuntimeException("parse source file exception");
         }
         int pool_index = read(2);

@@ -12,9 +12,9 @@ import java.util.HashMap;
 @Setter
 public abstract class AttributeInfo {
 
-    private String attribute_name;
+    private String attributeName;
 
-    private int attribute_length;
+    private int attributeLength;
 
     private byte[] info;
 

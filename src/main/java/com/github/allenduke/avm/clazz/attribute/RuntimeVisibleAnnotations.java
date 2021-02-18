@@ -21,7 +21,7 @@ public class RuntimeVisibleAnnotations extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        if (!getName().equals(getAttribute_name())) {
+        if (!getName().equals(getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
         setNum_annotations(read(2));

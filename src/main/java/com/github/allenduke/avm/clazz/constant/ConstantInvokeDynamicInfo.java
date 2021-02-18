@@ -9,22 +9,22 @@ import lombok.Setter;
 public class ConstantInvokeDynamicInfo extends ConstantInfo {
 
 
-    private int bootstrap_method_attr_index;
+    private int bootstrapMethodAttrIndex;
 
-    private int name_and_type_index;
+    private int nameAndTypeIndex;
 
 
     @Override
     public int getTag() {
-        return 18;
+        return TAG_INVOKE_DYNAMIC;
     }
 
     @Override
     public ConstantInfo parse(ClassReader classReader) {
         ConstantInvokeDynamicInfo constant = new ConstantInvokeDynamicInfo();
         constant.setTag(getTag());
-        constant.setBootstrap_method_attr_index(classReader.readU2());
-        constant.setName_and_type_index(classReader.readU2());
+        constant.setBootstrapMethodAttrIndex(classReader.readU2());
+        constant.setNameAndTypeIndex(classReader.readU2());
         return constant;
     }
 }

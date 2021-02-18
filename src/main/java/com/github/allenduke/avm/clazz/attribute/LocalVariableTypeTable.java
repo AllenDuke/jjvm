@@ -11,7 +11,7 @@ public class LocalVariableTypeTable extends AttributeInfo {
 
     private int local_variable_type_table_length;
 
-    private Local_variable_table[] local_variable_type_tables;
+    private LocalVariableTypeEntry[] local_variable_type_tables;
 
     @Override
     public String getName() {
@@ -22,9 +22,9 @@ public class LocalVariableTypeTable extends AttributeInfo {
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
         setLocal_variable_type_table_length(read(2));
-        Local_variable_table[] local_variable_tables = new Local_variable_table[getLocal_variable_type_table_length()];
+        LocalVariableTypeEntry[] local_variable_tables = new LocalVariableTypeEntry[getLocal_variable_type_table_length()];
         for (int i = 0; i < getLocal_variable_type_table_length(); i++) {
-            Local_variable_table local_variable_table = new Local_variable_table();
+            LocalVariableTypeEntry local_variable_table = new LocalVariableTypeEntry();
             local_variable_table.setStart_pc(read(2));
             local_variable_table.setLength(read(2));
             ConstantUtf8Info constant = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
@@ -40,7 +40,7 @@ public class LocalVariableTypeTable extends AttributeInfo {
 
     @Setter
     @Getter
-    class Local_variable_table {
+    class LocalVariableTypeEntry {
         private int start_pc;
 
         private int length;

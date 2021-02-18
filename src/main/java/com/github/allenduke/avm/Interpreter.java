@@ -13,8 +13,8 @@ import com.github.allenduke.avm.rtda.JThread;
 public class Interpreter {
 
     public static void execute(Code code) throws Exception {
-        int max_stack = code.getMax_stack();
-        int max_locals = code.getMax_locals();
+        int max_stack = code.getMaxStack();
+        int max_locals = code.getMaxLocals();
         byte[] byteCode = code.getCode();
         JThread jthread = new JThread(max_stack);
         Frame frame = new Frame(jthread, max_locals, max_stack);

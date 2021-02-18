@@ -19,10 +19,10 @@ public class SourceFile extends AttributeInfo {
 
   @Override
   public SourceFile parseAttribute(ClassFile classFile) {
-    if (!getName().equals(this.getAttribute_name())) {
+    if (!getName().equals(this.getAttributeName())) {
       throw new RuntimeException("parse source file exception");
     }
-    if (2 != this.getAttribute_length()) {
+    if (2 != this.getAttributeLength()) {
       throw new RuntimeException("parse source file exception");
     }
     if (2 != this.getInfo().length) {

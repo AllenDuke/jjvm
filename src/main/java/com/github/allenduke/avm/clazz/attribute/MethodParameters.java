@@ -16,7 +16,7 @@ public class MethodParameters extends AttributeInfo {
   @Override
   public MethodParameters parseAttribute(ClassFile classFile) {
     setIndex(0);
-    if (!getName().equals(this.getAttribute_name())) {
+    if (!getName().equals(this.getAttributeName())) {
       throw new RuntimeException("parse source file exception");
     }
     return this;

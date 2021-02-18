@@ -21,10 +21,10 @@ public class EnclosingMethod extends AttributeInfo {
 
     @Override
     public EnclosingMethod parseAttribute(ClassFile classFile) {
-        if (!getName().equals(this.getAttribute_name())) {
+        if (!getName().equals(this.getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        if (4 != this.getAttribute_length()) {
+        if (4 != this.getAttributeLength()) {
             throw new RuntimeException("parse source file exception");
         }
         int clazz_index = read(2);

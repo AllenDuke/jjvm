@@ -1,5 +1,10 @@
 package com.github.allenduke.avm;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
 /**
  * @author allen
  * @description
@@ -7,7 +12,8 @@ package com.github.allenduke.avm;
  * @date 2021/2/10
  */
 public class Test {
-    public static void main(String[] args) {
-        System.out.println(Integer.toBinaryString(0x1234)+" "+Integer.toHexString(0x1234));
+    public static void main(String[] args){
+        int i=0;
+        i++;
     }
 }

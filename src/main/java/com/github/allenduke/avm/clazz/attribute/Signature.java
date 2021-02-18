@@ -18,7 +18,7 @@ public class Signature extends AttributeInfo {
 
     @Override
     public Signature parseAttribute(ClassFile classFile) {
-        if (!getName().equals(this.getAttribute_name())) {
+        if (!getName().equals(this.getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
         int index = read(2);

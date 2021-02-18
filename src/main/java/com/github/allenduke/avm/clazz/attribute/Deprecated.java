@@ -16,10 +16,10 @@ public class Deprecated extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        if (!getName().equals(getAttribute_name())) {
+        if (!getName().equals(getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        if (0 != getInfo().length || 0 != getAttribute_length()) {
+        if (0 != getInfo().length || 0 != getAttributeLength()) {
             throw new RuntimeException("parse source file exception");
         }
         return this;

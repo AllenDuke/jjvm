@@ -8,21 +8,21 @@ import lombok.Setter;
 @Setter
 public class ConstantInterfaceMethodRefInfo extends ConstantInfo {
 
-    private int class_index;
+    private int classIndex;
 
-    private int name_and_type_index;
+    private int nameAndTypeIndex;
 
     @Override
     public int getTag() {
-        return 11;
+        return TAG_INTERFACE_METHOD_REF;
     }
 
     @Override
     public ConstantInfo parse(ClassReader classReader) {
         ConstantInterfaceMethodRefInfo constant = new ConstantInterfaceMethodRefInfo();
         constant.setTag(getTag());
-        constant.setClass_index(classReader.readU2());
-        constant.setName_and_type_index(classReader.readU2());
+        constant.setClassIndex(classReader.readU2());
+        constant.setNameAndTypeIndex(classReader.readU2());
         return constant;
     }
 }

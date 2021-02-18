@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 public class LineNumberTable extends AttributeInfo {
 
-    private int line_number_table_length;
+    private int lineNumberEntriesLength;
 
-    private Line_number_table[] line_number_table;
+    private LineNumberEntry[] lineNumberEntries;
 
     @Override
     public String getName() {
@@ -20,25 +20,25 @@ public class LineNumberTable extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        line_number_table_length = read(2);
-        Line_number_table[] line_number_tables = new Line_number_table[line_number_table_length];
-        for (int i = 0; i < line_number_table_length; i++) {
-            Line_number_table line_number_table = new Line_number_table();
-            line_number_table.setStart_pc(read(2));
-            line_number_table.setLine_number(read(2));
-            line_number_tables[i] = line_number_table;
+        lineNumberEntriesLength = read(2);
+        LineNumberEntry[] lineNumberInfos = new LineNumberEntry[lineNumberEntriesLength];
+        for (int i = 0; i < lineNumberEntriesLength; i++) {
+            LineNumberEntry info = new LineNumberEntry();
+            info.setStartPc(read(2));
+            info.setLineNumber(read(2));
+            lineNumberInfos[i] = info;
         }
-        this.setLine_number_table(line_number_tables);
+        this.setLineNumberEntries(lineNumberInfos);
         return this;
     }
 
     @Getter
     @Setter
-    class Line_number_table {
+    class LineNumberEntry {
 
-        private int start_pc;
+        private int startPc;
 
-        private int line_number;
+        private int lineNumber;
 
     }
 }

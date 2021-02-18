@@ -33,7 +33,7 @@ ClassFile {
 */
 public class ClassFile {
 
-    private String magic;                       /* 魔数，4字节，0xcafebabe */
+    private long magic;                         /* 魔数，4字节，0xcafebabe */
 
     private int minorVersion;                   /* 次版本号, u2 */
 
@@ -41,7 +41,7 @@ public class ClassFile {
 
     private int constantPoolCount;              /* 常量数量 */
 
-    private ConstantInfo[] constantPool;            /* 常量池 */
+    private ConstantInfo[] constantPool;        /* 常量池 */
 
     private String accessFlags;                 /* 类访问标志，类 接口 public private, 16bit */
 
@@ -51,19 +51,19 @@ public class ClassFile {
 
     private int interfacesCount;                /* 接口数量 */
 
-    private ConstantUtf8Info[] interfaces;    /* 接口表，接口名在常量池中的索引 */
+    private ConstantUtf8Info[] interfaces;      /* 接口表，接口名在常量池中的索引 */
 
     private int fieldsCount;                    /* 字段数量 */
 
-    private FieldInfo[] fields;                /* 字段表 */
+    private FieldInfo[] fields;                 /* 字段表 */
 
     private int methodsCount;                   /* 方法数量 */
 
-    private MethodInfo[] methods;              /* 方法表 */
+    private MethodInfo[] methods;               /* 方法表 */
 
     private int attributesCount;                /* 属性数量 */
 
-    private AttributeInfo[] attributes;        /* 属性表 */
+    private AttributeInfo[] attributes;         /* 属性表 */
 
     public MethodInfo getMainMethod() {
         for (MethodInfo m : methods) {

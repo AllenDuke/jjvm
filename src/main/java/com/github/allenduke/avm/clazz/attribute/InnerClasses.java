@@ -22,7 +22,7 @@ public class InnerClasses extends AttributeInfo {
 
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
-        if (!getName().equals(getAttribute_name())) {
+        if (!getName().equals(getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
         setIndex(0);

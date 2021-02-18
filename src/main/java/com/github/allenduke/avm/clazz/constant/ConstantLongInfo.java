@@ -8,25 +8,21 @@ import lombok.Setter;
 @Setter
 public class ConstantLongInfo extends ConstantInfo {
 
-    private int high_bytes;
-
-    private int low_bytes;
+    private long value;
 
     @Override
     public int getTag() {
-        return 5;
+        return TAG_LONG;
     }
 
     @Override
     public ConstantInfo parse(ClassReader classReader) {
         ConstantLongInfo constant = new ConstantLongInfo();
         constant.setTag(getTag());
-        constant.setHigh_bytes(classReader.readU4Int());
-        constant.setLow_bytes(classReader.readU4Int());
+        long lh = classReader.readU4();
+        long ll = classReader.readU4();
+        constant.setValue((lh << 32) | ll);
         return constant;
     }
 
-    public long toLong() {
-        return ((long) high_bytes << 32) + low_bytes;
-    }
 }

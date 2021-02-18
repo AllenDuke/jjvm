@@ -8,18 +8,18 @@ import lombok.Setter;
 @Setter
 public class ConstantStringInfo extends ConstantInfo {
 
-    private int string_index;
+    private int stringIndex;
 
     @Override
     public int getTag() {
-        return 8;
+        return TAG_STRING;
     }
 
     @Override
     public ConstantInfo parse(ClassReader classReader) {
         ConstantStringInfo constant = new ConstantStringInfo();
         constant.setTag(getTag());
-        constant.setString_index(classReader.readU2());
+        constant.setStringIndex(classReader.readU2());
         return constant;
     }
 }

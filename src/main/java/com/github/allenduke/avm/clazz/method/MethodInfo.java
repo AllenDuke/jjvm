@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 public class MethodInfo {
 
-    private String access_flag;
+    private String accessFlag;
 
     private String name;
 
     private String descriptor;
 
-    private int attributes_count;
+    private int attributesCount;
 
     private AttributeInfo[] attributes;
 

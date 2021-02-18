@@ -47,9 +47,9 @@ public class ClassReader {
         for (int i = 0; i < attribute_infos.length; i++) {
             ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
-            attribute_info.setAttribute_name(attributeName.parseString());
+            attribute_info.setAttributeName(attributeName.parseString());
             int u4 = readU4Int();
-            attribute_info.setAttribute_length(u4);
+            attribute_info.setAttributeLength(u4);
             attribute_info.setInfo(readBytes(u4));
             attribute_infos[i] = attribute_info.parseAttribute(classFile);
         }
@@ -70,7 +70,7 @@ public class ClassReader {
                     s = "0" + s;
                 }
             }
-            method_info.setAccess_flag(method_info.accessFlagsToString(s));
+            method_info.setAccessFlag(method_info.accessFlagsToString(s));
             ConstantUtf8Info constant_utf8_info =
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             method_info.setName(constant_utf8_info.parseString());
@@ -78,15 +78,15 @@ public class ClassReader {
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             method_info.setDescriptor(constant_utf8_info2.parseString());
             int attribute_count = readU2();
-            method_info.setAttributes_count(attribute_count);
+            method_info.setAttributesCount(attribute_count);
 
             AttributeInfo[] attribute_infos = new AttributeInfo[attribute_count];
             for (int j = 0; j < attribute_count; j++) {
                 ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
                 AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
-                attribute_info.setAttribute_name(attributeName.parseString());
+                attribute_info.setAttributeName(attributeName.parseString());
                 int u4 = readU4Int();
-                attribute_info.setAttribute_length(u4);
+                attribute_info.setAttributeLength(u4);
                 attribute_info.setInfo(readBytes(u4));
                 attribute_infos[j] = attribute_info.parseAttribute(classFile);
             }
@@ -110,7 +110,7 @@ public class ClassReader {
                     s = "0" + s;
                 }
             }
-            field_info.setAccess_flag(field_info.accessFlagsToString(s));
+            field_info.setAccessFlag(field_info.accessFlagsToString(s));
             ConstantUtf8Info constant_utf8_info =
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             field_info.setName(constant_utf8_info.parseString());
@@ -118,15 +118,15 @@ public class ClassReader {
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             field_info.setDescriptor(constant_utf8_info2.parseString());
             int attribute_count = readU2();
-            field_info.setAttributes_count(attribute_count);
+            field_info.setAttributesCount(attribute_count);
 
             AttributeInfo[] attribute_infos = new AttributeInfo[attribute_count];
             for (int j = 0; j < attribute_count; j++) {
                 ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
                 AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
-                attribute_info.setAttribute_name(attributeName.parseString());
+                attribute_info.setAttributeName(attributeName.parseString());
                 int u4 = readU4Int();
-                attribute_info.setAttribute_length(u4);
+                attribute_info.setAttributeLength(u4);
                 attribute_info.setInfo(readBytes(u4));
                 attribute_infos[j] = attribute_info.parseAttribute(classFile);
             }
@@ -146,7 +146,7 @@ public class ClassReader {
             ConstantClassInfo constant_class_info =
                     (ConstantClassInfo) classFile.getConstantPool()[readU2()];
             ConstantUtf8Info constant_utf8_info =
-                    (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getName_index()];
+                    (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getNameIndex()];
             infos[i] = constant_utf8_info;
         }
         classFile.setInterfaces(infos);
@@ -160,7 +160,7 @@ public class ClassReader {
         ConstantClassInfo constant_class_info =
                 (ConstantClassInfo) classFile.getConstantPool()[readU2()];
         ConstantUtf8Info constant_utf8_info =
-                (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getName_index()];
+                (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getNameIndex()];
         classFile.setThisClass(constant_utf8_info.parseString());
     }
 
@@ -173,7 +173,7 @@ public class ClassReader {
         ConstantClassInfo constant_class_info =
                 (ConstantClassInfo) classFile.getConstantPool()[index];
         ConstantUtf8Info constant_utf8_info =
-                (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getName_index()];
+                (ConstantUtf8Info) classFile.getConstantPool()[constant_class_info.getNameIndex()];
         classFile.setSuperClass(constant_utf8_info.parseString());
     }
 
@@ -268,9 +268,8 @@ public class ClassReader {
     }
 
     public int readU1() {
-        byte[] bytes = Arrays.copyOfRange(this.bytes, pos, pos + 1);
-        pos += 1;
-        return bytesToInt(bytes);
+        byte b = bytes[pos++];
+        return 0xff & b;
     }
 
     public byte[] readBytes(int length) {
@@ -279,17 +278,16 @@ public class ClassReader {
         return bytes;
     }
 
-    public byte readU1Byte() {
-        byte b = this.bytes[pos];
-        pos += 1;
-        return b;
+    public byte readByte() {
+        return bytes[pos++];
     }
 
-    // todo 更换 short
     public int readU2() {
-        byte[] bytes = Arrays.copyOfRange(this.bytes, pos, pos + 2);
-        pos += 2;
-        return bytesToInt(bytes);
+        byte bh = bytes[pos++]; /* 大端，高位在低 */
+        byte bl = bytes[pos++];
+        int ih = 0xff & bh;
+        int il = 0xff & bl;
+        return (ih << 8) | il;
     }
 
     public byte[] readU2Byte() {
@@ -298,16 +296,16 @@ public class ClassReader {
         return bytes;
     }
 
-    public String readU4() {
-        byte[] bytes = Arrays.copyOfRange(this.bytes, pos, pos + 4);
-        pos += 4;
-        return bytesToString(bytes);
+    public long readU4() {
+        long lh = readU2();
+        long ll = readU2();
+        return (lh << 16) | ll;
     }
 
     public int readU4Int() {
-        byte[] bytes = Arrays.copyOfRange(this.bytes, pos, pos + 4);
-        pos += 4;
-        return bytesToInt(bytes);
+        int ih = readU2();
+        int il = readU2();
+        return (ih << 16) | il;
     }
 
     public static String bytesToString(byte[] bytes) {

@@ -10,7 +10,7 @@ import lombok.Setter;
 public class FieldInfo {
 
     //U2
-    private String access_flag;
+    private String accessFlag;
 
     //U2
     private String name;
@@ -18,7 +18,7 @@ public class FieldInfo {
     //U2
     private String descriptor;
 
-    private int attributes_count;
+    private int attributesCount;
 
     private AttributeInfo[] attributes;
 

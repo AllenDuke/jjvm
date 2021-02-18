@@ -12,7 +12,7 @@ public class ConstantIntegerInfo extends ConstantInfo {
 
     @Override
     public int getTag() {
-        return 3;
+        return TAG_INTEGER;
     }
 
     @Override

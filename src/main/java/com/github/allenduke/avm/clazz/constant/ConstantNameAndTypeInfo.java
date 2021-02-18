@@ -9,21 +9,21 @@ import lombok.Setter;
 public class ConstantNameAndTypeInfo extends ConstantInfo {
 
 
-    private int name_index;
+    private int nameIndex;
 
-    private int descriptor_index;
+    private int descriptorIndex;
 
     @Override
     public int getTag() {
-        return 12;
+        return TAG_NAME_AND_TYPE;
     }
 
     @Override
     public ConstantInfo parse(ClassReader classReader) {
         ConstantNameAndTypeInfo constant = new ConstantNameAndTypeInfo();
         constant.setTag(getTag());
-        constant.setName_index(classReader.readU2());
-        constant.setDescriptor_index(classReader.readU2());
+        constant.setNameIndex(classReader.readU2());
+        constant.setDescriptorIndex(classReader.readU2());
         return constant;
     }
 }

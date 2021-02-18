@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class Code extends AttributeInfo {
     //U2
-    private int max_stack;
+    private int maxStack;
     //U2
-    private int max_locals;
+    private int maxLocals;
     //U4
-    private int code_length;
+    private int codeLength;
     //U1[]
     private byte[] code;
     //U2
@@ -33,13 +33,13 @@ public class Code extends AttributeInfo {
     @Override
     public Code parseAttribute(ClassFile classFile) {
         setIndex(0);
-        if (!getName().equals(this.getAttribute_name())) {
+        if (!getName().equals(this.getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        max_stack = read(2);
-        max_locals = read(2);
-        code_length = read(4);
-        code = readBytes(code_length);
+        maxStack = read(2);
+        maxLocals = read(2);
+        codeLength = read(4);
+        code = readBytes(codeLength);
         exception_table_length = read(2);
 
         Exception_table[] exception_tables = new Exception_table[exception_table_length];
@@ -58,9 +58,9 @@ public class Code extends AttributeInfo {
             int pool_index = read(2);
             ConstantUtf8Info attributeName = (ConstantUtf8Info) classFile.getConstantPool()[pool_index];
             AttributeInfo attribute_info = AttributeInfo.getInstance(attributeName.parseString());
-            attribute_info.setAttribute_name(attributeName.parseString());
+            attribute_info.setAttributeName(attributeName.parseString());
             int u4 = read(4);
-            attribute_info.setAttribute_length(u4);
+            attribute_info.setAttributeLength(u4);
             attribute_info.setInfo(readBytes(u4));
             attribute_infos[i] = attribute_info.parseAttribute(classFile);
         }

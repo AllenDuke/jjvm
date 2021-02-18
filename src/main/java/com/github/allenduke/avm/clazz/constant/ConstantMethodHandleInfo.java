@@ -8,21 +8,21 @@ import lombok.Setter;
 @Setter
 public class ConstantMethodHandleInfo extends ConstantInfo {
 
-    private int reference_kind;
+    private int referenceKind;
 
-    private int reference_index;
+    private int referenceIndex;
 
     @Override
     public int getTag() {
-        return 15;
+        return TAG_METHOD_HANDLE;
     }
 
     @Override
     public ConstantInfo parse(ClassReader classReader) {
         ConstantMethodHandleInfo constant = new ConstantMethodHandleInfo();
         constant.setTag(getTag());
-        constant.setReference_kind(classReader.readU1());
-        constant.setReference_index(classReader.readU2());
+        constant.setReferenceKind(classReader.readU1());
+        constant.setReferenceIndex(classReader.readU2());
         return constant;
     }
 }
