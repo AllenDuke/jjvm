@@ -3,6 +3,8 @@ package com.github.allenduke.avm;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 import java.nio.ByteBuffer;
 
 /**
@@ -13,7 +15,15 @@ import java.nio.ByteBuffer;
  */
 public class Test {
     public static void main(String[] args){
-        int i=0;
-        i++;
+//        int i=2;
+//        i/=2;
+//        float a=1;
+//        float t=0.5f;
+//        a/=t;
+//        double b=2;
+//        b/=0.3;
+        long l=3;
+        l++;
+//        Object o=new Object();
     }
 }

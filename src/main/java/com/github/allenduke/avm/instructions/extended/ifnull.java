@@ -15,8 +15,8 @@ public class ifnull extends BranchInstruction {
     @Override
     public void execute(Frame frame) throws Exception {
         OperandStack operandStack = frame.getOperandStack();
-        Reference reference = operandStack.popRef();
-        if (reference.get() == null) {
+        Object reference = operandStack.popRef();
+        if (reference == null) {
             branch(frame,offset);
         }
     }

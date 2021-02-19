@@ -13,7 +13,7 @@ public class astore_1 extends NoOperandsInstruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        Reference val = frame.getOperandStack().popRef();
-        frame.getLocalVars().setRef(1, val);
+        Object ref = frame.getOperandStack().popRef();
+        frame.getLocalVars().setRef(1, ref);
     }
 }

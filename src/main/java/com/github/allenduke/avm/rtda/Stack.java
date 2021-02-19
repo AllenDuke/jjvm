@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Stack {
+public class Stack {            /* 如果Stack在运行时扩展，遇到内存不足时，抛出OOM */
 
-    private int maxSize;
+    private int maxSize;        /* 栈的最大深度 */
 
     private int size;
 
@@ -20,6 +20,7 @@ public class Stack {
 
     public void push(Frame frame) {
         if (this.size >= maxSize) {
+            // todo 遍历java虚拟机栈，检查方法的异常处理表
             System.out.println("java.lang.StackOverflowError");
             System.exit(1);
         }

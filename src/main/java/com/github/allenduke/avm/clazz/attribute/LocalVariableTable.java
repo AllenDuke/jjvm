@@ -11,7 +11,7 @@ public class LocalVariableTable extends AttributeInfo {
 
     private int localVariableInfosLength;
 
-    private LocalVariableInfo[] localVariableInfos;
+    private LocalVariableEntry[] localVariableEntries;
 
     @Override
     public String getName() {
@@ -21,26 +21,26 @@ public class LocalVariableTable extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        setLocalVariableInfosLength(read(2));
-        LocalVariableInfo[] infos = new LocalVariableInfo[localVariableInfosLength];
+        localVariableInfosLength = read(2);
+        LocalVariableEntry[] entries = new LocalVariableEntry[localVariableInfosLength];
         for (int i = 0; i < localVariableInfosLength; i++) {
-            LocalVariableInfo info = new LocalVariableInfo();
-            info.setStartPc(read(2));
-            info.setLength(read(2));
+            LocalVariableEntry entry = new LocalVariableEntry();
+            entry.setStartPc(read(2));
+            entry.setLength(read(2));
             ConstantUtf8Info constant = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
-            info.setName(constant.parseString());
+            entry.setName(constant.parseString());
             ConstantUtf8Info constant2 = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
-            info.setDescriptor(constant2.parseString());
-            info.setIndex(read(2));
-            infos[i] = info;
+            entry.setDescriptor(constant2.parseString());
+            entry.setIndex(read(2));
+            entries[i] = entry;
         }
-        setLocalVariableInfos(infos);
+        setLocalVariableEntries(entries);
         return this;
     }
 
     @Setter
     @Getter
-    class LocalVariableInfo {
+    class LocalVariableEntry {
         private int startPc;
 
         private int length;

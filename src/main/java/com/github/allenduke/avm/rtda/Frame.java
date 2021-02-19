@@ -1,5 +1,6 @@
 package com.github.allenduke.avm.rtda;
 
+import com.github.allenduke.avm.rtda.heap.Method;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,15 +10,15 @@ import lombok.ToString;
 @ToString
 public class Frame {
 
-    private Frame lower;
+    private LocalVars localVars;        /* 局部变量表 */
 
-    private LocalVars localVars;
-
-    private OperandStack operandStack;
+    private OperandStack operandStack;  /* 操作数栈 */
 
     private JThread jthread;
 
-    private int nextPc;
+    private int nextPc;                 /* 下一条字节码索引 */
+
+    private Method method;              /* 当前栈帧所属方法 */
 
     public Frame(JThread jthread, int maxLocals, int maxStack) {
         this.jthread = jthread;

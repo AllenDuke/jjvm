@@ -3,43 +3,13 @@ package com.github.allenduke.avm.rtda;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.lang.ref.Reference;
-
-
+@Getter
+@Setter
+/* 一个slot应该容纳一个int或者一个指针 */
 public class Slot {
 
-    private String num;
+    private int num;        /* double long 大端存储，高位在低 */
 
-    /**
-     * >0 true  <0  false
-     */
-    @Getter
-    @Setter
-    private boolean flag;
-
-    @Getter
-    @Setter
-    private Reference ref;
-
-    @Override
-    public String toString() {
-        return getNumInt() + "";
-    }
-
-    public int getNumInt() {
-        return Integer.parseInt(num, 2);
-    }
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = Integer.toBinaryString(num);
-    }
-
-    public void setNum(String num) {
-        this.num = num;
-    }
+    private Object ref;     /* 这是一个引用 */
 
 }

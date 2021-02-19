@@ -8,6 +8,7 @@ import com.github.allenduke.avm.clazz.field.FieldInfo;
 import com.github.allenduke.avm.clazz.method.MethodInfo;
 
 import java.util.Arrays;
+import java.util.zip.CheckedOutputStream;
 
 /* 从一个class文件中读取数据 */
 public class ClassReader {
@@ -247,6 +248,9 @@ public class ClassReader {
         for (int i = 1; i < count; i++) {
             int tag = readU1();
             cpInfos[i] = ConstantInfo.parseConstant(tag, this);
+            if (tag == ConstantInfo.TAG_LONG || tag == ConstantInfo.TAG_DOUBLE) {
+                i++;
+            }
         }
         classFile.setConstantPool(cpInfos);
     }

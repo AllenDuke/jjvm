@@ -10,7 +10,7 @@ public class StackMapTable extends AttributeInfo {
 
     private int number;
 
-    private Stack_map_frame[] entries;
+    private StackMapFrame[] stackMapFrames;
 
     @Override
     public String getName() {
@@ -20,16 +20,16 @@ public class StackMapTable extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        setNumber(read(2));
-        Stack_map_frame[] stack_map_frames = new Stack_map_frame[getNumber()];
+        number = read(2);
+        StackMapFrame[] frames = new StackMapFrame[getNumber()];
         for (int i = 0; i < getNumber(); i++) {
 
         }
-        setEntries(stack_map_frames);
+        stackMapFrames = frames;
         return this;
     }
 
-    class Stack_map_frame {
+    class StackMapFrame {
 
     }
 }

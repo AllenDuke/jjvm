@@ -22,8 +22,8 @@ public class Signature extends AttributeInfo {
             throw new RuntimeException("parse source file exception");
         }
         int index = read(2);
-        ConstantUtf8Info constant_utf8_info = (ConstantUtf8Info) classFile.getConstantPool()[index];
-        setSignature(constant_utf8_info.parseString());
+        ConstantUtf8Info constantUtf8Info = (ConstantUtf8Info) classFile.getConstantPool()[index];
+        setSignature(constantUtf8Info.parseString());
         return this;
     }
 }

@@ -7,6 +7,7 @@ import com.github.allenduke.avm.clazz.field.FieldInfo;
 import com.github.allenduke.avm.clazz.method.MethodInfo;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter

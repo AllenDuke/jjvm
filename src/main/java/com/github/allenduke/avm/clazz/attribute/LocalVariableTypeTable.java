@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 public class LocalVariableTypeTable extends AttributeInfo {
 
-    private int local_variable_type_table_length;
+    private int localVariableTypeEntriesLength;
 
-    private LocalVariableTypeEntry[] local_variable_type_tables;
+    private LocalVariableTypeEntry[] localVariableTypeEntries;
 
     @Override
     public String getName() {
@@ -21,20 +21,20 @@ public class LocalVariableTypeTable extends AttributeInfo {
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
         setIndex(0);
-        setLocal_variable_type_table_length(read(2));
-        LocalVariableTypeEntry[] local_variable_tables = new LocalVariableTypeEntry[getLocal_variable_type_table_length()];
-        for (int i = 0; i < getLocal_variable_type_table_length(); i++) {
-            LocalVariableTypeEntry local_variable_table = new LocalVariableTypeEntry();
-            local_variable_table.setStart_pc(read(2));
-            local_variable_table.setLength(read(2));
+        localVariableTypeEntriesLength = read(2);
+        LocalVariableTypeEntry[] entries = new LocalVariableTypeEntry[localVariableTypeEntriesLength];
+        for (int i = 0; i < localVariableTypeEntriesLength; i++) {
+            LocalVariableTypeEntry entry = new LocalVariableTypeEntry();
+            entry.setStart_pc(read(2));
+            entry.setLength(read(2));
             ConstantUtf8Info constant = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
-            local_variable_table.setName(constant.parseString());
+            entry.setName(constant.parseString());
             ConstantUtf8Info constant2 = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
-            local_variable_table.setSignature(constant2.parseString());
-            local_variable_table.setIndex(read(2));
-            local_variable_tables[i] = local_variable_table;
+            entry.setSignature(constant2.parseString());
+            entry.setIndex(read(2));
+            entries[i] = entry;
         }
-        setLocal_variable_type_tables(local_variable_tables);
+        setLocalVariableTypeEntries(entries);
         return this;
     }
 

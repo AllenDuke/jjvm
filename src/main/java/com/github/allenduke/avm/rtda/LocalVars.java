@@ -7,6 +7,7 @@ import lombok.ToString;
 import java.lang.ref.Reference;
 
 /**
+ *
  */
 @Setter
 @Getter
@@ -23,12 +24,12 @@ public class LocalVars {
     }
 
     public void setInt(int index, int val) {
-        localVars[index] = Util.setInt(val);
+        localVars[index].setNum(val);
     }
 
     public int getInt(int index) {
         Slot slot = localVars[index];
-        return Util.getInt(slot);
+        return slot.getNum();
     }
 
     public void setFloat(int index, float val) {
@@ -42,15 +43,14 @@ public class LocalVars {
     }
 
     public void setLong(int index, long val) {
-        Slot[] slots = Util.setLong(val);
-        localVars[index] = slots[0];
-        localVars[index + 1] = slots[1];
+        localVars[index].setNum((int) (val >> 32));  /* 大端，高位在低 */
+        localVars[index + 1].setNum((int) val);
     }
 
     public long getLong(int index) {
-        Slot high = localVars[index];
-        Slot low = localVars[index + 1];
-        return Util.getLong(new Slot[]{high, low});
+        long lh = localVars[index].getNum();
+        long ll = localVars[index + 1].getNum();
+        return (lh << 32) | ll;
     }
 
     public void setDouble(int index, double val) {
@@ -63,13 +63,11 @@ public class LocalVars {
         return Double.longBitsToDouble(v);
     }
 
-    public void setRef(int index, Reference ref) {
-        Slot slot = new Slot();
-        slot.setRef(ref);
-        localVars[index] = slot;
+    public void setRef(int index, Object ref) {
+        localVars[index].setRef(ref);
     }
 
-    public Reference getRef(int index) {
+    public Object getRef(int index) {
         return localVars[index].getRef();
     }
 }

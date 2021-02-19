@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class RuntimeVisibleAnnotations extends AttributeInfo {
 
-    private int num_annotations;
+    private int annotationsLength;
 
     private Annotation[] annotations;
 
@@ -24,25 +24,25 @@ public class RuntimeVisibleAnnotations extends AttributeInfo {
         if (!getName().equals(getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        setNum_annotations(read(2));
-        Annotation[] annotations = new Annotation[getNum_annotations()];
-        for (int i = 0; i < getNum_annotations(); i++) {
+        annotationsLength = read(2);
+        Annotation[] annotations = new Annotation[annotationsLength];
+        for (int i = 0; i < annotationsLength; i++) {
             Annotation annotation = new Annotation();
-            ConstantUtf8Info constant_utf8_info = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
-            annotation.setType(constant_utf8_info.parseString());
+            ConstantUtf8Info constantUtf8Info = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
+            annotation.setType(constantUtf8Info.parseString());
             annotation.setNum(read(2));
-            Annotation_element[] annotation_elements = new Annotation_element[annotation.getNum()];
-            for (int j = 0; j < annotation_elements.length; j++) {
-                Annotation_element annotation_element = new Annotation_element();
+            AnnotationElement[] elements = new AnnotationElement[annotation.getNum()];
+            for (int j = 0; j < elements.length; j++) {
+                AnnotationElement element = new AnnotationElement();
                 ConstantUtf8Info constant_utf8_info1 = (ConstantUtf8Info) classFile.getConstantPool()[read(2)];
-                annotation_element.setElement_name(constant_utf8_info.parseString());
-                Element_value element_value = new Element_value();
+                element.setElementName(constantUtf8Info.parseString());
+                ElementValue value = new ElementValue();
                 //TODO
 
-                annotation_element.setElement_value(element_value);
-                annotation_elements[j] = annotation_element;
+                element.setElementValue(value);
+                elements[j] = element;
             }
-            annotation.setElements(annotation_elements);
+            annotation.setElements(elements);
             annotations[i] = annotation;
         }
         setAnnotations(annotations);
@@ -57,21 +57,21 @@ public class RuntimeVisibleAnnotations extends AttributeInfo {
 
         private int num;
 
-        private Annotation_element[] elements;
+        private AnnotationElement[] elements;
     }
 
     @Getter
     @Setter
-    class Annotation_element {
+    class AnnotationElement {
 
-        private String element_name;
+        private String elementName;
 
-        private Element_value element_value;
+        private ElementValue elementValue;
     }
 
     @Getter
     @Setter
-    class Element_value {
+    class ElementValue {
 
         private byte tag;
 

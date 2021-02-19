@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class SourceFileDebugExtension extends AttributeInfo {
 
-    private String debug_extension;
+    private String debugExtension;
 
     @Override
     public String getName() {
@@ -20,7 +20,7 @@ public class SourceFileDebugExtension extends AttributeInfo {
         if (!getName().equals(this.getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        setDebug_extension(new String(getInfo()));
+        debugExtension = new String(getInfo());
         return this;
     }
 }

@@ -13,7 +13,7 @@ public class aload_0 extends Index8Instruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        Reference ref = frame.getLocalVars().getRef(0);
+        Object ref = frame.getLocalVars().getRef(0);
         frame.getOperandStack().pushRef(ref);
     }
 }

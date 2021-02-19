@@ -13,7 +13,7 @@ public class astore extends Index8Instruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        Reference reference = frame.getOperandStack().popRef();
+        Object reference = frame.getOperandStack().popRef();
         frame.getLocalVars().setRef(index, reference);
     }
 }
