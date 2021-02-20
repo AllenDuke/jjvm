@@ -2,12 +2,10 @@ package com.github.allenduke.avm.instructions.base;
 
 import com.github.allenduke.avm.rtda.Frame;
 
-/**
- * 跳转指令
- */
+/* 跳转指令 */
 public abstract class BranchInstruction implements Instruction {
 
-    protected int offset;
+    protected int offset;       /* 跳转的偏移量 */
 
     @Override
     public void fetchOperands(BytecodeReader reader) throws Exception {

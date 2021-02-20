@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-/* 一个slot应该容纳一个int或者一个指针 */
+/* 一个slot应该容纳一个int或者一个指针，在c/c++中，可以使用一个u64，或者利用联合体 */
 public class Slot {
 
     private int num;        /* double long 大端存储，高位在低 */

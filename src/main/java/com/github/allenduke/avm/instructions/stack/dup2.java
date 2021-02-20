@@ -8,7 +8,7 @@ import com.github.allenduke.avm.rtda.Slot;
 public class dup2 extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x5c;
+        return CODE_dup2;
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.github.allenduke.avm.rtda.Frame;
 public class pop extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x57;
+        return CODE_pop;
     }
 
     @Override

@@ -4,9 +4,17 @@ import com.github.allenduke.avm.instructions.base.BranchInstruction;
 import com.github.allenduke.avm.instructions.base.BytecodeReader;
 import com.github.allenduke.avm.instructions.base.Instruction;
 import com.github.allenduke.avm.instructions.base.InstructionFactory;
-import com.github.allenduke.avm.instructions.loads.*;
+import com.github.allenduke.avm.instructions.loads.d.dload;
+import com.github.allenduke.avm.instructions.loads.f.fload;
+import com.github.allenduke.avm.instructions.loads.i.iload;
+import com.github.allenduke.avm.instructions.loads.l.lload;
+import com.github.allenduke.avm.instructions.loads.ref.aload;
 import com.github.allenduke.avm.instructions.math.iinc;
-import com.github.allenduke.avm.instructions.stores.*;
+import com.github.allenduke.avm.instructions.stores.d.dstore;
+import com.github.allenduke.avm.instructions.stores.f.fstore;
+import com.github.allenduke.avm.instructions.stores.i.istore;
+import com.github.allenduke.avm.instructions.stores.l.lstore;
+import com.github.allenduke.avm.instructions.stores.ref.astore;
 import com.github.allenduke.avm.rtda.Frame;
 
 

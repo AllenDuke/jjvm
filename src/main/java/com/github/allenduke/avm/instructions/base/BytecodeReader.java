@@ -9,7 +9,7 @@ public class BytecodeReader {
 
     private byte[] code;
 
-    private int pc;
+    private int pc;         /* 记录当前要处理的下标 */
 
     public BytecodeReader(byte[] code, int pc) {
         this.code = code;
@@ -23,25 +23,22 @@ public class BytecodeReader {
     }
 
     public int read8() {
-        int b = code[pc];
-        pc += 1;
+        int b = code[pc++];
         return b & 0xFF;
     }
 
     public int read16() {
-        int b1 = code[pc];
-        int b2 = code[pc + 1];
-        pc += 2;
-        return b1 << 8 | b2;
+        byte bh = code[pc++];   /* 大端，高位在低 */
+        byte bl = code[pc++];
+        int ih = 0xff & bh;
+        int il = 0xff & bl;
+        return (ih << 8) | il;
     }
 
     public int read32() {
-        int b1 = code[pc];
-        int b2 = code[pc + 1];
-        int b3 = code[pc + 2];
-        int b4 = code[pc + 3];
-        pc += 4;
-        return b1 << 24 | b2 << 16 | b3 << 8 | b4;
+        int ih = read16();
+        int il = read16();
+        return (ih << 16) | il;
     }
 
     public int[] readInt32s(int length) {

@@ -15,15 +15,15 @@ import java.nio.ByteBuffer;
  */
 public class Test {
     public static void main(String[] args){
-//        int i=2;
-//        i/=2;
+        int i=2;
+        i++;
 //        float a=1;
 //        float t=0.5f;
 //        a/=t;
 //        double b=2;
 //        b/=0.3;
-        long l=3;
-        l++;
+//        long l=3;
+//        l++;
 //        Object o=new Object();
     }
 }

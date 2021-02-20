@@ -8,7 +8,7 @@ import com.github.allenduke.avm.rtda.Slot;
 public class swap extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x5f;
+        return CODE_swap;
     }
 
     @Override

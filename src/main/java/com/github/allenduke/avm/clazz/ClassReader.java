@@ -10,10 +10,10 @@ import com.github.allenduke.avm.clazz.method.MethodInfo;
 import java.util.Arrays;
 import java.util.zip.CheckedOutputStream;
 
-/* 从一个class文件中读取数据 */
+/* 从一个class文件中读取数据，流式，读一个少一个 */
 public class ClassReader {
 
-    private int pos;        /* 记录当前要处理的下表 */
+    private int pos;        /* 记录当前要处理的下标 */
 
     private byte[] bytes;
 

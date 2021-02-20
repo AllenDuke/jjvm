@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class pop2 extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x58;
+        return CODE_pop2;
     }
 
     @Override
