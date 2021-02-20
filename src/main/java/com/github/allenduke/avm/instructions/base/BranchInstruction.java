@@ -9,7 +9,7 @@ public abstract class BranchInstruction implements Instruction {
 
     @Override
     public void fetchOperands(BytecodeReader reader) throws Exception {
-        this.offset = reader.read16();
+        this.offset = reader.readInt16();
     }
 
     @Override

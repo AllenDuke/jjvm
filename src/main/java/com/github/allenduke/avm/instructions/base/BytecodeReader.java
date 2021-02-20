@@ -22,12 +22,17 @@ public class BytecodeReader {
         return this;
     }
 
-    public int read8() {
+    public int readUInt8(){
         int b = code[pc++];
         return b & 0xFF;
     }
 
-    public int read16() {
+    public int readInt8(){
+        int b = code[pc++];
+        return b;
+    }
+
+    public int readUInt16(){
         byte bh = code[pc++];   /* 大端，高位在低 */
         byte bl = code[pc++];
         int ih = 0xff & bh;
@@ -35,23 +40,35 @@ public class BytecodeReader {
         return (ih << 8) | il;
     }
 
-    public int read32() {
-        int ih = read16();
-        int il = read16();
+    public int readInt16(){
+        int ih = code[pc++];   /* 大端，高位在低 */
+        int il = code[pc++];
+        return (ih << 8) | il;
+    }
+
+    public int readUInt32(){
+        int ih = readUInt16();
+        int il = readUInt16();
+        return (ih << 16) | il;
+    }
+
+    public int readInt32(){
+        int ih = readInt16();
+        int il = readInt16();
         return (ih << 16) | il;
     }
 
     public int[] readInt32s(int length) {
         int[] ints = new int[length];
         for (int i = 0; i < ints.length; i++) {
-            ints[i] = read32();
+            ints[i] = readInt32();
         }
         return ints;
     }
 
     public void skipPadding() {
         while (pc % 4 != 0) {
-            read8();
+            readUInt8();
         }
     }
 }

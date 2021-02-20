@@ -22,7 +22,7 @@ public class sipush implements Instruction {
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        val = reader.read16();
+        val = reader.readInt16();
     }
 
     @Override

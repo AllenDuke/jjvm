@@ -15,8 +15,8 @@ import java.nio.ByteBuffer;
  */
 public class Test {
     public static void main(String[] args){
-        int i=2;
-        i++;
+        int sum=0;
+        for(int i=1;i<=100;i++) sum+=i;
 //        float a=1;
 //        float t=0.5f;
 //        a/=t;

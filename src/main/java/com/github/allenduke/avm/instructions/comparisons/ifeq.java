@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class ifeq extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0x99;
+        return CODE_ifeq;
     }
 
     @Override

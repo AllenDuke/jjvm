@@ -7,12 +7,7 @@ import com.github.allenduke.avm.rtda.Frame;
 public class goto_ extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0xa7;
-    }
-
-    @Override
-    public void fetchOperands(BytecodeReader reader) throws Exception {
-        this.offset = reader.read16();
+        return CODE_goto;
     }
 
     @Override

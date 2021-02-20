@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class if_icmpeq extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0x9f;
+        return CODE_if_icmpeq;
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class lcmp extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x94;
+        return CODE_lcmp;
     }
 
     @Override
@@ -15,7 +15,7 @@ public class lcmp extends NoOperandsInstruction {
         OperandStack operandStack = frame.getOperandStack();
         long v2 = operandStack.popLong();
         long v1 = operandStack.popLong();
-        if (v1 < v2)
+        if (v1 > v2)
             operandStack.pushInt(1);
         else if (v1 == v2)
             operandStack.pushInt(0);

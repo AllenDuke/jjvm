@@ -10,9 +10,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
+/**
+ * 用于实现switch语句，形式：
+ * switch(i){
+ *     case 0:;
+ *     case 1:;
+ *     case 2:;
+ *     default:;
+ * }
+ */
 public class tableswitch extends BranchInstruction {
 
-    private int defaultOffset;
+    private int defaultOffset;      /* 默认情况下，要跳转的字节码的偏移量 */
 
     private int low;
 
@@ -22,15 +31,16 @@ public class tableswitch extends BranchInstruction {
 
     @Override
     public int getOpCode() {
-        return 0xaa;
+        return CODE_tableswitch;
     }
 
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        reader.skipPadding();
-        low = reader.read32();
-        high = reader.read32();
+        reader.skipPadding();       /* 会有0~3字节的填充，defaultOffset在字节码中对齐4字节 */
+        defaultOffset = reader.readInt32();
+        low = reader.readInt32();
+        high = reader.readInt32();
         jumpOffsets = reader.readInt32s(high - low + 1);
     }
 
@@ -43,7 +53,6 @@ public class tableswitch extends BranchInstruction {
         } else {
             offset = defaultOffset;
         }
-        JThread jthread = frame.getJthread();
-        jthread.setPc(offset);
+        branch(frame,offset);
     }
 }

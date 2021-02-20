@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class fcmpg extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x96;
+        return CODE_fcmpg;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class fcmpg extends NoOperandsInstruction {
             operandStack.pushInt(0);
         else if (v1 < v2)
             operandStack.pushInt(-1);
-        else
+        else    /* 如果有NaN，fcmpg指令返回1 */
             operandStack.pushInt(1);
     }
 }

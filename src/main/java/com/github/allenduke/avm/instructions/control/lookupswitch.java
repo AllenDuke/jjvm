@@ -10,6 +10,15 @@ import com.github.allenduke.avm.rtda.JThread;
 
 @Setter
 @Getter
+/**
+ * 用于实现switch语句，形式：
+ * switch(i){
+ *     case -100:;
+ *     case 0:;
+ *     case 100:;
+ *     default:;
+ * }
+ */
 public class lookupswitch extends BranchInstruction {
 
     private int defaultOffset;
@@ -20,29 +29,30 @@ public class lookupswitch extends BranchInstruction {
 
     @Override
     public int getOpCode() {
-        return 0xab;
+        return CODE_lookupswitch;
     }
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
         reader.skipPadding();
-        defaultOffset = reader.read32();
-        npairs = reader.read32();
+        defaultOffset = reader.readInt32();
+        npairs = reader.readInt32();
         matchOffsets = reader.readInt32s(npairs * 2);
     }
 
     @Override
     public void execute(Frame frame) throws Exception {
         OperandStack operandStack = frame.getOperandStack();
-        JThread jthread = frame.getJthread();
         int key = operandStack.popInt();
+
+        //todo 考虑用IntHashMap优化
         for (int i = 0; i < npairs * 2; i += 2) {
             if (matchOffsets[i] == key) {
                 offset = matchOffsets[i + 1];
-                jthread.setPc(offset);
+                branch(frame, offset);
                 return;
             }
         }
-        jthread.setPc(defaultOffset);
+        branch(frame, defaultOffset);
     }
 }

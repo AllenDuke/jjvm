@@ -4,16 +4,16 @@ import com.github.allenduke.avm.instructions.base.BranchInstruction;
 import com.github.allenduke.avm.instructions.base.BytecodeReader;
 import com.github.allenduke.avm.rtda.Frame;
 
-public class gotow extends BranchInstruction {
+public class goto_w extends BranchInstruction {
 
     @Override
     public int getOpCode() {
-        return 0xc8;
+        return CODE_goto_w;
     }
 
     @Override
     public void fetchOperands(BytecodeReader reader) throws Exception {
-        offset = reader.read32();
+        offset = reader.readInt32();
     }
 
     @Override

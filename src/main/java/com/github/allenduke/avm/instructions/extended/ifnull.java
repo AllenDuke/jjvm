@@ -9,7 +9,7 @@ import java.lang.ref.Reference;
 public class ifnull extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0xc6;
+        return CODE_ifnull;
     }
 
     @Override

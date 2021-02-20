@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class ifne extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0x9a;
+        return CODE_ifne;
     }
 
     @Override

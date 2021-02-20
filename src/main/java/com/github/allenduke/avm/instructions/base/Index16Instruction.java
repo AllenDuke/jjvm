@@ -9,7 +9,7 @@ public abstract class Index16Instruction implements Instruction {
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        this.index = reader.read16();
+        this.index = reader.readUInt16();
     }
 
     @Override

@@ -7,9 +7,6 @@ import com.github.allenduke.avm.instructions.base.InstructionFactory;
 import com.github.allenduke.avm.rtda.Frame;
 import com.github.allenduke.avm.rtda.JThread;
 
-/**
-
- */
 public class Interpreter {
 
     public static void execute(Code code) throws Exception {
@@ -31,7 +28,7 @@ public class Interpreter {
             jthread.setPc(pc);
             System.out.print("pc:" + reader.getPc());
             reader.reset(byteCode, pc);
-            opcode = reader.read8();
+            opcode = reader.readUInt8();
             System.out.print("    opcode:" + opcode);
             Instruction instruction = InstructionFactory.getByOpcode(opcode);
             instruction.fetchOperands(reader);
@@ -39,7 +36,7 @@ public class Interpreter {
             instruction.execute(frame);
             System.out.print("   op:" + instruction.getReName());
             System.out.println("   localVars:" + frame.getLocalVars());
-        } while (opcode != 0xb1);
+        } while (opcode != Instruction.CODE_return);
 
     }
 }

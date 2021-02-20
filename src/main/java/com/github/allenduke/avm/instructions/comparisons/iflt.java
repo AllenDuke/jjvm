@@ -7,14 +7,14 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class iflt extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0x9b;
+        return CODE_iflt;
     }
 
     @Override
     public void execute(Frame frame) throws Exception {
         OperandStack operandStack = frame.getOperandStack();
         int i = operandStack.popInt();
-        if (i > 0) {
+        if (i < 0) {
             branch(frame,offset);
         }
     }

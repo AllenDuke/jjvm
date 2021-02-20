@@ -17,9 +17,12 @@ public class LocalVars {
     private Slot[] localVars;
 
     public LocalVars(int maxLocals) {
-        if (maxLocals > 0)
+        if (maxLocals > 0) {    /* 初始化所有槽位 */
             localVars = new Slot[maxLocals];
-        else
+            for (int i = 0; i < maxLocals; i++) {
+                localVars[i] = new Slot();
+            }
+        } else
             System.exit(-1);
     }
 

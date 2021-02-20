@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class dcmpl extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x97;
+        return CODE_dcmpl;
     }
 
     @Override

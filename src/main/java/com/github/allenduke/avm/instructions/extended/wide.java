@@ -17,78 +17,79 @@ import com.github.allenduke.avm.instructions.stores.l.lstore;
 import com.github.allenduke.avm.instructions.stores.ref.astore;
 import com.github.allenduke.avm.rtda.Frame;
 
+/* 当局部变量表大小超过256时，使用wide指令扩展 */
+public class wide implements Instruction {
 
-public class wide extends BranchInstruction {
-
-    private Instruction modifiedInstruction;
+    private Instruction modifiedInstruction;    /* 扩展后的指令，扩展后执行 */
 
     @Override
     public int getOpCode() {
-        return 0xc4;
+        return CODE_wide;
     }
 
     @Override
     public void fetchOperands(BytecodeReader reader) throws Exception {
-        int opcode = reader.read8();
-        switch (opcode) {
-            case 0x15:
-                iload a = (iload) InstructionFactory.getByOpcode(0x15);
-                a.setIndex(reader.read16());
+        int opcode = reader.readUInt8();            /* 要被扩展的指令 */
+        // todo 优化代码
+        switch (opcode) {                       /* 增加索引的宽度 */
+            case CODE_iload:
+                iload a = (iload) InstructionFactory.getByOpcode(CODE_iload);
+                a.setIndex(reader.readUInt16());
                 modifiedInstruction = a;
                 break;
-            case 0x16:
-                lload b = (lload) InstructionFactory.getByOpcode(0x16);
-                b.setIndex(reader.read16());
+            case CODE_lload:
+                lload b = (lload) InstructionFactory.getByOpcode(CODE_lload);
+                b.setIndex(reader.readUInt16());
                 modifiedInstruction = b;
                 break;
-            case 0x17:
-                fload c = (fload) InstructionFactory.getByOpcode(0x17);
-                c.setIndex(reader.read16());
+            case CODE_fload:
+                fload c = (fload) InstructionFactory.getByOpcode(CODE_fload);
+                c.setIndex(reader.readUInt16());
                 modifiedInstruction = c;
                 break;
-            case 0x18:
-                dload d = (dload) InstructionFactory.getByOpcode(0x18);
-                d.setIndex(reader.read16());
+            case CODE_dload:
+                dload d = (dload) InstructionFactory.getByOpcode(CODE_dload);
+                d.setIndex(reader.readUInt16());
                 modifiedInstruction = d;
                 break;
-            case 0x19:
-                aload e = (aload) InstructionFactory.getByOpcode(0x19);
-                e.setIndex(reader.read16());
+            case CODE_aload:
+                aload e = (aload) InstructionFactory.getByOpcode(CODE_aload);
+                e.setIndex(reader.readUInt16());
                 modifiedInstruction = e;
                 break;
-            case 0x36:
-                istore f = (istore) InstructionFactory.getByOpcode(0x36);
-                f.setIndex(reader.read16());
+            case CODE_istore:
+                istore f = (istore) InstructionFactory.getByOpcode(CODE_istore);
+                f.setIndex(reader.readUInt16());
                 modifiedInstruction = f;
                 break;
-            case 0x37:
-                lstore g = (lstore) InstructionFactory.getByOpcode(0x37);
-                g.setIndex(reader.read16());
+            case CODE_lstore:
+                lstore g = (lstore) InstructionFactory.getByOpcode(CODE_lstore);
+                g.setIndex(reader.readUInt16());
                 modifiedInstruction = g;
                 break;
-            case 0x38:
-                fstore h = (fstore) InstructionFactory.getByOpcode(0x38);
-                h.setIndex(reader.read16());
+            case CODE_fstore:
+                fstore h = (fstore) InstructionFactory.getByOpcode(CODE_fstore);
+                h.setIndex(reader.readUInt16());
                 modifiedInstruction = h;
                 break;
-            case 0x39:
-                dstore i = (dstore) InstructionFactory.getByOpcode(0x39);
-                i.setIndex(reader.read16());
+            case CODE_dstore:
+                dstore i = (dstore) InstructionFactory.getByOpcode(CODE_dstore);
+                i.setIndex(reader.readUInt16());
                 modifiedInstruction = i;
                 break;
-            case 0x3a:
-                astore j = (astore) InstructionFactory.getByOpcode(0x3a);
-                j.setIndex(reader.read16());
+            case CODE_astore:
+                astore j = (astore) InstructionFactory.getByOpcode(CODE_astore);
+                j.setIndex(reader.readUInt16());
                 modifiedInstruction = j;
                 break;
-            case 0x84:
-                iinc k = (iinc) InstructionFactory.getByOpcode(0x64);
-                k.setIndex(reader.read16());
-                k.setConstVal(reader.read16());
+            case CODE_iinc:
+                iinc k = (iinc) InstructionFactory.getByOpcode(CODE_iinc);
+                k.setIndex(reader.readUInt16());
+                k.setConstVal(reader.readInt16());
                 modifiedInstruction = k;
                 break;
-            case 0xa9:
-                throw new Exception("error");
+            case CODE_ret:
+                throw new Exception("Unsupported opcode: 0xa9!");
         }
     }
 

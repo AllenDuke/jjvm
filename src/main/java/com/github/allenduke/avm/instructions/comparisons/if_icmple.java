@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class if_icmple extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0xa4;
+        return CODE_if_icmple;
     }
 
     @Override
@@ -15,7 +15,7 @@ public class if_icmple extends BranchInstruction {
         OperandStack operandStack = frame.getOperandStack();
         int v2 = operandStack.popInt();
         int v1 = operandStack.popInt();
-        if (v2 >= v1) {
+        if (v1 <= v2) {
             branch(frame,offset);
         }
     }

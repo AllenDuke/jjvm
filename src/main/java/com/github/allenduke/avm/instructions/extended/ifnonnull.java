@@ -6,10 +6,10 @@ import com.github.allenduke.avm.rtda.OperandStack;
 
 import java.lang.ref.Reference;
 
-public class ifnotnull extends BranchInstruction {
+public class ifnonnull extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0xc7;
+        return CODE_ifnonnull;
     }
 
     @Override

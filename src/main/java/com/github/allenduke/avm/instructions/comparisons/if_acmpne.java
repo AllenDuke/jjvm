@@ -9,7 +9,7 @@ import java.lang.ref.Reference;
 public class if_acmpne extends BranchInstruction {
     @Override
     public int getOpCode() {
-        return 0xa6;
+        return CODE_if_acmpne;
     }
 
     @Override
@@ -17,7 +17,7 @@ public class if_acmpne extends BranchInstruction {
         OperandStack operandStack = frame.getOperandStack();
         Object v2 = operandStack.popRef();
         Object v1 = operandStack.popRef();
-        if (!v2.equals(v1)) {
+        if (!v1.equals(v2)) {
             branch(frame,offset);
         }
     }

@@ -9,8 +9,8 @@ import com.github.allenduke.avm.instructions.constants.operands.bipush;
 import com.github.allenduke.avm.instructions.constants.operands.sipush;
 import com.github.allenduke.avm.instructions.control.*;
 import com.github.allenduke.avm.instructions.conversions.*;
-import com.github.allenduke.avm.instructions.extended.gotow;
-import com.github.allenduke.avm.instructions.extended.ifnotnull;
+import com.github.allenduke.avm.instructions.extended.goto_w;
+import com.github.allenduke.avm.instructions.extended.ifnonnull;
 import com.github.allenduke.avm.instructions.extended.ifnull;
 import com.github.allenduke.avm.instructions.extended.wide;
 import com.github.allenduke.avm.instructions.loads.array.*;
@@ -146,8 +146,8 @@ public class InstructionFactory {
         putInstruction(new l2f());
         putInstruction(new l2i());
 
-        putInstruction(new gotow());
-        putInstruction(new ifnotnull());
+        putInstruction(new goto_w());
+        putInstruction(new ifnonnull());
         putInstruction(new ifnull());
         putInstruction(new wide());
 

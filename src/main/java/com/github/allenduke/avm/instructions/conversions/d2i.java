@@ -7,12 +7,12 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class d2i extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x8e;
+        return CODE_d2i;
     }
 
     @Override
     public void execute(Frame frame) throws Exception {
         OperandStack operandStack = frame.getOperandStack();
-        operandStack.pushFloat((int) operandStack.popDouble());
+        operandStack.pushInt((int) operandStack.popDouble());
     }
 }

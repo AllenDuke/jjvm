@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class l2i extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x88;
+        return CODE_l2i;
     }
 
     @Override

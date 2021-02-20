@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.OperandStack;
 public class dcmpg extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x98;
+        return CODE_dcmpg;
     }
 
     @Override

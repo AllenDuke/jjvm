@@ -20,8 +20,8 @@ public class iinc extends Index8Instruction {
     @Override
     public void fetchOperands(BytecodeReader reader) {
         // fixme 对于index constVal长度大于8bit的情况，iinc指令前会有wide指令，那么接下来就不是read8了
-        this.index = reader.read8();
-        this.constVal = reader.read8();
+        this.index = reader.readUInt8();
+        this.constVal = reader.readInt8();
     }
 
     @Override

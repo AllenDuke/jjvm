@@ -22,7 +22,7 @@ public class bipush implements Instruction {
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        val = reader.read8();
+        val = reader.readInt8();
     }
 
     @Override
