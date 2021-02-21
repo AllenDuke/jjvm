@@ -12,6 +12,6 @@ public class fstore_1 extends NoOperandsInstruction {
     @Override
     public void execute(Frame frame) {
         float val = frame.getOperandStack().popFloat();
-        frame.getLocalVars().setFloat(1, val);
+        frame.getSlots().setFloat(1, val);
     }
 }

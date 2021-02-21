@@ -11,7 +11,7 @@ public class dload_3 extends Index8Instruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        double val = frame.getLocalVars().getDouble(3);
+        double val = frame.getSlots().getDouble(3);
         frame.getOperandStack().pushDouble(val);
     }
 }

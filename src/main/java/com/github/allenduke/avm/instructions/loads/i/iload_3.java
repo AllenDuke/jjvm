@@ -12,7 +12,7 @@ public class iload_3 extends NoOperandsInstruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        int val = frame.getLocalVars().getInt(3);
+        int val = frame.getSlots().getInt(3);
         frame.getOperandStack().pushInt(val);
     }
 }

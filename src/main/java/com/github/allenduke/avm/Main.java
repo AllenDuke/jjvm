@@ -1,9 +1,9 @@
 package com.github.allenduke.avm;
 
 import com.github.allenduke.avm.classpath.Classpath;
-import com.github.allenduke.avm.clazz.ClassFile;
-import com.github.allenduke.avm.clazz.ClassReader;
-import com.github.allenduke.avm.clazz.method.MethodInfo;
+import com.github.allenduke.avm.classfile.ClassFile;
+import com.github.allenduke.avm.classfile.ClassReader;
+import com.github.allenduke.avm.classfile.method.MethodInfo;
 
 import java.util.Arrays;
 

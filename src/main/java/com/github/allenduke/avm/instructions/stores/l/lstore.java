@@ -12,6 +12,6 @@ public class lstore extends Index8Instruction {
     @Override
     public void execute(Frame frame) throws Exception {
         long val = frame.getOperandStack().popLong();
-        frame.getLocalVars().setLong(index, val);
+        frame.getSlots().setLong(index, val);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.allenduke.avm;
 
-import com.github.allenduke.avm.clazz.attribute.Code;
+import com.github.allenduke.avm.classfile.attribute.CodeAttribute;
 import com.github.allenduke.avm.instructions.base.BytecodeReader;
 import com.github.allenduke.avm.instructions.base.Instruction;
 import com.github.allenduke.avm.instructions.base.InstructionFactory;
@@ -9,10 +9,10 @@ import com.github.allenduke.avm.rtda.JThread;
 
 public class Interpreter {
 
-    public static void execute(Code code) throws Exception {
-        int max_stack = code.getMaxStack();
-        int max_locals = code.getMaxLocals();
-        byte[] byteCode = code.getCode();
+    public static void execute(CodeAttribute codeAttribute) throws Exception {
+        int max_stack = codeAttribute.getMaxStack();
+        int max_locals = codeAttribute.getMaxLocals();
+        byte[] byteCode = codeAttribute.getCode();
         JThread jthread = new JThread(max_stack);
         Frame frame = new Frame(jthread, max_locals, max_stack);
         jthread.pushFrame(frame);
@@ -35,7 +35,7 @@ public class Interpreter {
             frame.setNextPc(reader.getPc());
             instruction.execute(frame);
             System.out.print("   op:" + instruction.getReName());
-            System.out.println("   localVars:" + frame.getLocalVars());
+            System.out.println("   localVars:" + frame.getSlots());
         } while (opcode != Instruction.CODE_return);
 
     }

@@ -12,6 +12,6 @@ public class dstore_1 extends NoOperandsInstruction {
     @Override
     public void execute(Frame frame) throws Exception {
         double val = frame.getOperandStack().popDouble();
-        frame.getLocalVars().setDouble(1, val);
+        frame.getSlots().setDouble(1, val);
     }
 }

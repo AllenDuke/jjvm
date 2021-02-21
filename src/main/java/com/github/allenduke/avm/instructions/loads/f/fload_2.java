@@ -11,7 +11,7 @@ public class fload_2 extends Index8Instruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        float val = frame.getLocalVars().getFloat(2);
+        float val = frame.getSlots().getFloat(2);
         frame.getOperandStack().pushFloat(val);
     }
 }

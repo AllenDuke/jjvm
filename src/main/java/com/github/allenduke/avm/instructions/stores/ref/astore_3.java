@@ -3,8 +3,6 @@ package com.github.allenduke.avm.instructions.stores.ref;
 import com.github.allenduke.avm.instructions.base.NoOperandsInstruction;
 import com.github.allenduke.avm.rtda.Frame;
 
-import java.lang.ref.Reference;
-
 public class astore_3 extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
@@ -14,6 +12,6 @@ public class astore_3 extends NoOperandsInstruction {
     @Override
     public void execute(Frame frame) throws Exception {
         Object ref = frame.getOperandStack().popRef();
-        frame.getLocalVars().setRef(3, ref);
+        frame.getSlots().setRef(3, ref);
     }
 }

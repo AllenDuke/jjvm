@@ -3,7 +3,7 @@ package com.github.allenduke.avm.instructions.math;
 import com.github.allenduke.avm.instructions.base.BytecodeReader;
 import com.github.allenduke.avm.instructions.base.Index8Instruction;
 import com.github.allenduke.avm.rtda.Frame;
-import com.github.allenduke.avm.rtda.LocalVars;
+import com.github.allenduke.avm.rtda.Slots;
 import lombok.Setter;
 
 /* 为局部变量表中的int变量增加常量值 如：int i=0; i++; i+=127; i+=128 */
@@ -26,9 +26,9 @@ public class iinc extends Index8Instruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        LocalVars localVars = frame.getLocalVars();
-        int val = localVars.getInt(index);
+        Slots slots = frame.getSlots();
+        int val = slots.getInt(index);
         val += constVal;
-        localVars.setInt(index, val);
+        slots.setInt(index, val);
     }
 }

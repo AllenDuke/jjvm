@@ -11,7 +11,7 @@ public class lload_3 extends Index8Instruction {
 
     @Override
     public void execute(Frame frame) throws Exception {
-        long val = frame.getLocalVars().getLong(3);
+        long val = frame.getSlots().getLong(3);
         frame.getOperandStack().pushLong(val);
     }
 }

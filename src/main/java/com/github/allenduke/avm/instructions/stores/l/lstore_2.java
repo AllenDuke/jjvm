@@ -12,6 +12,6 @@ public class lstore_2 extends NoOperandsInstruction {
     @Override
     public void execute(Frame frame) throws Exception {
         long val = frame.getOperandStack().popLong();
-        frame.getLocalVars().setLong(2, val);
+        frame.getSlots().setLong(2, val);
     }
 }

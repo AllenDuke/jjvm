@@ -12,6 +12,6 @@ public class istore_1 extends NoOperandsInstruction {
     @Override
     public void execute(Frame frame) {
         int val = frame.getOperandStack().popInt();
-        frame.getLocalVars().setInt(1, val);
+        frame.getSlots().setInt(1, val);
     }
 }

@@ -5,7 +5,7 @@ import com.github.allenduke.avm.rtda.Frame;
 
 public abstract class Index16Instruction implements Instruction {
 
-    private int index;
+    protected int index;
 
     @Override
     public void fetchOperands(BytecodeReader reader) {

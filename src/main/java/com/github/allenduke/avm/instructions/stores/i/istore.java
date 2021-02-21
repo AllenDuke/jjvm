@@ -12,6 +12,6 @@ public class istore extends Index8Instruction {
     @Override
     public void execute(Frame frame) {
         int val = frame.getOperandStack().popInt();
-        frame.getLocalVars().setInt(index, val);
+        frame.getSlots().setInt(index, val);
     }
 }
