@@ -24,7 +24,8 @@ public class MethodRef extends SymRef{
                                        ConstantMethodRefInfo methodRefInfo) {
         MethodRef methodRef = new MethodRef();
         methodRef.setConstantPool(constantPool);
-        ConstantUtf8Info utf8Info = (ConstantUtf8Info) constantInfos[methodRefInfo.getClassIndex()];
+        ConstantClassInfo classInfo = (ConstantClassInfo) constantInfos[methodRefInfo.getClassIndex()];
+        ConstantUtf8Info utf8Info = (ConstantUtf8Info) constantInfos[classInfo.getNameIndex()];
         methodRef.setClassName(utf8Info.parseString());
 
         ConstantNameAndTypeInfo nameAndTypeInfo =

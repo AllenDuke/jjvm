@@ -1,5 +1,6 @@
 package com.github.allenduke.avm.rtda;
 
+import com.github.allenduke.avm.rtda.heap.AObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -66,11 +67,11 @@ public class Slots {
         return Double.longBitsToDouble(v);
     }
 
-    public void setRef(int index, Object ref) {
+    public void setRef(int index, AObject ref) {
         slots[index].setRef(ref);
     }
 
-    public Object getRef(int index) {
+    public AObject getRef(int index) {
         return slots[index].getRef();
     }
 }

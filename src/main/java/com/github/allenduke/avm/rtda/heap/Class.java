@@ -1,6 +1,7 @@
 package com.github.allenduke.avm.rtda.heap;
 
 import com.github.allenduke.avm.classfile.ClassFile;
+import com.github.allenduke.avm.classfile.method.MethodInfo;
 import com.github.allenduke.avm.rtda.Slot;
 import com.github.allenduke.avm.rtda.Slots;
 import lombok.Getter;
@@ -53,9 +54,13 @@ public class Class {
         return clazz;
     }
 
-    public boolean isPublic() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PUBLIC);
+    public Method getMainMethod() {
+        for (Method m : methods) {
+            if ("main".equals(m.getName()) && "([Ljava/lang/String;)V".equals(m.getDescriptor())) {
+                return m;
+            }
+        }
+        return null;
     }
 
     /* 取包名 */
@@ -65,18 +70,14 @@ public class Class {
         return name.substring(0, i);
     }
 
+    public boolean isPublic() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_PUBLIC);
+    }
+
     /* 当前类是否接受other访问，取决于当前是否public，或者当前与other同包 */
     public boolean isAccessibleTo(Class other) {
         return isPublic() || getPackageName().equals(other.getPackageName());
-    }
-
-    public boolean isSubClassOf(Class clazz) {
-        Class pre = this.superClass;
-        while (pre != null) {
-            if (pre == clazz) return true;
-            pre = pre.superClass;
-        }
-        return false;
     }
 
     public boolean isInterface() {
@@ -88,4 +89,82 @@ public class Class {
         int flag = Integer.valueOf(accessFlags, 16);
         return 0 != (flag & AccessFlags.ACC_ABSTRACT);
     }
+
+    /* 判断当前类是否是clazz的子类 */
+    public boolean isSubClassOf(Class clazz) {
+        Class pre = this.superClass;
+        while (pre != null) {
+            if (pre == clazz) return true;
+            pre = pre.superClass;
+        }
+        return false;
+    }
+
+    /* 判断当前是否实现了iface */
+    private boolean isImplements(Class iface) {
+        Class cur = this;
+        while (cur != null) {
+            for (Class i : cur.getInterfaces()) {
+                if (i == iface || i.isSubInterfaceOf(iface)) return true;
+            }
+            cur = cur.superClass;
+        }
+        return false;
+    }
+
+    /* 判断当前接口是否继承了iface */
+    private boolean isSubInterfaceOf(Class iface) {
+        for (Class superInterface : this.getInterfaces()) {
+            if (superInterface == iface || superInterface.isSubInterfaceOf(iface)) return true;
+        }
+        return false;
+    }
+
+    public boolean IsAssignableFrom(Class other) {
+        if (other == this) return true;
+        if (!this.isInterface()) return other.isSubClassOf(this);
+        else return other.isImplements(this);
+//        if (!other.isArray()) {
+//            if (!other.isInterface()) {
+//                if(!this.isInterface()) return other.isSubClassOf(this);
+//                else return other.isImplements(this);
+//            } else {
+//                if(!this.isInterface()) return this.isJlObject();
+//                else return this.isSuperInterfaceOf(other);
+//            }
+//        } else {
+//            if (!this.isArray()) {
+//                if (!this.isInterface()) return this.isJlObject();
+//                else return this.isJlCloneable() || this.isJioSerializable();
+//
+//            } else{
+//                sc:=s.ComponentClass();
+//                tc:=t.ComponentClass()
+//                return sc == tc || tc.IsAssignableFrom(sc)
+//            }
+//        }
+//        return false;
+    }
+
+    private boolean isJioSerializable() {
+        return false;
+    }
+
+    private boolean isJlCloneable() {
+        return false;
+    }
+
+    private boolean isSuperInterfaceOf(Class other) {
+        return false;
+    }
+
+    private boolean isJlObject() {
+        return false;
+    }
+
+    private boolean isArray() {
+        return false;
+    }
+
+
 }

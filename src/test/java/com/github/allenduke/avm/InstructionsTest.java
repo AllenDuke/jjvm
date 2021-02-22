@@ -3,6 +3,10 @@ package com.github.allenduke.avm;
 import com.github.allenduke.avm.classfile.ClassFile;
 import com.github.allenduke.avm.classfile.ClassReader;
 import com.github.allenduke.avm.classfile.method.MethodInfo;
+import com.github.allenduke.avm.classpath.Classpath;
+import com.github.allenduke.avm.rtda.heap.Class;
+import com.github.allenduke.avm.rtda.heap.ClassLoader;
+import com.github.allenduke.avm.rtda.heap.Method;
 import org.junit.Test;
 
 import java.nio.file.Files;
@@ -18,10 +22,10 @@ public class InstructionsTest {
     @Test
     public void t1() throws Exception {
         String path = "D:\\github\\jvmgo-book\\v1\\code\\java\\jvmgo_java\\ch05\\build\\classes\\java\\test\\com\\github\\jvmgo\\MainTest.class";
-        byte[] bytes = Files.readAllBytes(Paths.get(path));
-        ClassReader classReader = new ClassReader(bytes);
-        ClassFile classFile = classReader.parseClassFile();
-        MethodInfo mainMethod = classFile.getMainMethod();
-        Interpreter.execute(mainMethod.getCodeAttribute());
+        Classpath cp = new Classpath("", path);
+        ClassLoader classLoader = ClassLoader.newClassLoader(cp);
+        Class mainClass = classLoader.loadClass(path);
+        Method mainMethod = mainClass.getMainMethod();
+        Interpreter.execute(mainMethod);
     }
 }

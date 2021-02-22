@@ -31,14 +31,15 @@ public class ClassLoader {
     public Class loadClass(String name) {
         Class clazz = classMap.get(name);
         if (clazz == null) {
-            clazz=loadNonArrayClass(name);
+            clazz = loadNonArrayClass(name);
+            classMap.put(name, clazz);
         }
         return clazz;
     }
 
     private Class loadNonArrayClass(String name) {
         byte[] data = readClass(name);
-        Class clazz=defineClass(data);
+        Class clazz = defineClass(data);
         link(clazz);
         System.out.println("loaded class " + name);
         return clazz;
@@ -134,8 +135,8 @@ public class ClassLoader {
     private static void allocAndInitStaticVars(Class clazz) {
         clazz.setStaticVars(new Slots((int) clazz.getStaticSlotCount()));
         for (Field field : clazz.getFields()) {
-            if(field.isStatic()&&field.isFinal())
-                initStaticFinalVar(clazz,field);
+            if (field.isStatic() && field.isFinal())
+                initStaticFinalVar(clazz, field);
         }
     }
 
@@ -145,27 +146,27 @@ public class ClassLoader {
         long constValueIndex = field.getConstValueIndex();
         long slotId = field.getSlotId();
 
-        if(constValueIndex>0){
-            switch (field.getDescriptor()){
+        if (constValueIndex > 0) {
+            switch (field.getDescriptor()) {
                 case "Z":
                 case "B":
                 case "C":
                 case "S":
                 case "I":
-                    Integer i =(Integer) constantPool.getConstant((int) constValueIndex);
-                    staticVars.setInt((int) slotId,i);
+                    Integer i = (Integer) constantPool.getConstant((int) constValueIndex);
+                    staticVars.setInt((int) slotId, i);
                     break;
                 case "J":
-                    Long l =(Long) constantPool.getConstant((int) constValueIndex);
-                    staticVars.setLong((int) slotId,l);
+                    Long l = (Long) constantPool.getConstant((int) constValueIndex);
+                    staticVars.setLong((int) slotId, l);
                     break;
                 case "F":
-                    Float f =(Float) constantPool.getConstant((int) constValueIndex);
-                    staticVars.setFloat((int) slotId,f);
+                    Float f = (Float) constantPool.getConstant((int) constValueIndex);
+                    staticVars.setFloat((int) slotId, f);
                     break;
                 case "D":
-                    Double d =(Double) constantPool.getConstant((int) constValueIndex);
-                    staticVars.setDouble((int) slotId,d);
+                    Double d = (Double) constantPool.getConstant((int) constValueIndex);
+                    staticVars.setDouble((int) slotId, d);
                     break;
                 case "Ljava/lang/String;":
                     assert false; // todo

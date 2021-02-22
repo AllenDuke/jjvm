@@ -1,5 +1,6 @@
 package com.github.allenduke.avm.rtda;
 
+import com.github.allenduke.avm.rtda.heap.AObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -76,13 +77,13 @@ public class OperandStack {     /* 每个方法的操作数栈，在编译时就
         return Double.longBitsToDouble(popLong());
     }
 
-    public void pushRef(Object ref) {
+    public void pushRef(AObject ref) {
         Slot slot = new Slot();
         slot.setRef(ref);
         pushSlot(slot);
     }
 
-    public Object popRef() {
+    public AObject popRef() {
         return popSlot().getRef();
     }
 }

@@ -21,7 +21,7 @@ public class ConstantPool {
     private Object[] constants;
 
     public static ConstantPool newConstantPool(Class clazz, ConstantInfo[] constantInfos) {
-        Object[] constants = new AObject[constantInfos.length];
+        Object[] constants = new Object[constantInfos.length];
         ConstantPool constantPool = new ConstantPool();
         constantPool.clazz = clazz;
         constantPool.constants = constants;
@@ -82,4 +82,5 @@ public class ConstantPool {
         if(constant ==null) throw new RuntimeException("No constants at index "+index);
         return constant;
     }
+
 }

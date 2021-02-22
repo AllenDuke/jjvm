@@ -20,10 +20,11 @@ public class Frame {
 
     private Method method;              /* 当前栈帧所属方法 */
 
-    public Frame(JThread jthread, int maxLocals, int maxStack) {
+    public Frame(JThread jthread, int maxLocals, int maxStack,Method method) {
         this.jthread = jthread;
         this.slots = new Slots(maxLocals);
         this.operandStack = new OperandStack(maxStack);
+        this.method = method;
     }
 
 }

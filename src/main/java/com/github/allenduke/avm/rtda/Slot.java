@@ -1,5 +1,6 @@
 package com.github.allenduke.avm.rtda;
 
+import com.github.allenduke.avm.rtda.heap.AObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +13,6 @@ public class Slot {
 
     private int num;        /* double long 大端存储，高位在低 */
 
-    private Object ref;     /* 这是一个引用 */
+    private AObject ref;     /* 这是一个引用 */
 
 }

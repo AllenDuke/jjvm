@@ -1,20 +1,20 @@
 package com.github.allenduke.avm;
 
-import com.github.allenduke.avm.classfile.attribute.CodeAttribute;
 import com.github.allenduke.avm.instructions.base.BytecodeReader;
 import com.github.allenduke.avm.instructions.base.Instruction;
 import com.github.allenduke.avm.instructions.base.InstructionFactory;
 import com.github.allenduke.avm.rtda.Frame;
 import com.github.allenduke.avm.rtda.JThread;
+import com.github.allenduke.avm.rtda.heap.Method;
 
 public class Interpreter {
 
-    public static void execute(CodeAttribute codeAttribute) throws Exception {
-        int max_stack = codeAttribute.getMaxStack();
-        int max_locals = codeAttribute.getMaxLocals();
-        byte[] byteCode = codeAttribute.getCode();
-        JThread jthread = new JThread(max_stack);
-        Frame frame = new Frame(jthread, max_locals, max_stack);
+    public static void execute(Method mainMethod) throws Exception {
+        int maxStack = (int) mainMethod.getMaxStack();
+        int maxLocals = (int) mainMethod.getMaxLocals();
+        byte[] byteCode = mainMethod.getCode();
+        JThread jthread = new JThread(maxStack);
+        Frame frame = new Frame(jthread, maxLocals, maxStack, mainMethod);
         jthread.pushFrame(frame);
         loop(jthread, byteCode);
     }

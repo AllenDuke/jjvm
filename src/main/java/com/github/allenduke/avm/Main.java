@@ -4,6 +4,9 @@ import com.github.allenduke.avm.classpath.Classpath;
 import com.github.allenduke.avm.classfile.ClassFile;
 import com.github.allenduke.avm.classfile.ClassReader;
 import com.github.allenduke.avm.classfile.method.MethodInfo;
+import com.github.allenduke.avm.rtda.heap.Class;
+import com.github.allenduke.avm.rtda.heap.ClassLoader;
+import com.github.allenduke.avm.rtda.heap.Method;
 
 import java.util.Arrays;
 
@@ -34,8 +37,8 @@ public class Main {
     }
 
     private static void startJVM(Args args) {
-        Classpath cp = new Classpath(args.jre, args.classpath);
         String mainClassPath = args.getMainClass().replace(".", "/");
+        Classpath cp = new Classpath(args.jre, args.classpath);
         System.out.printf("classpath:%s class:%s args:%s\n",
                 cp, args.getMainClass(), args.getAppArgs());
         try {
@@ -52,10 +55,14 @@ public class Main {
             }
             System.out.println("]");
 
-            ClassReader reader = new ClassReader(classData);
-            ClassFile classFile = reader.parseClassFile();
-            MethodInfo mainMethod = classFile.getMainMethod();
-            Interpreter.execute(mainMethod.getCodeAttribute());
+//            ClassReader reader = new ClassReader(classData);
+//            ClassFile classFile = reader.parseClassFile();
+//            MethodInfo mainMethod = classFile.getMainMethod();
+
+            ClassLoader classLoader = ClassLoader.newClassLoader(cp);
+            Class mainClass = classLoader.loadClass(mainClassPath);
+            Method mainMethod = mainClass.getMainMethod();
+            Interpreter.execute(mainMethod);
             System.out.println("class data:" + Arrays.toString(classData));
         } catch (Exception e) {
             e.printStackTrace();
