@@ -1,13 +1,14 @@
 package com.github.allenduke.avm.instructions.loads.ref;
 
 import com.github.allenduke.avm.instructions.base.Index8Instruction;
+import com.github.allenduke.avm.instructions.base.NoOperandsInstruction;
 import com.github.allenduke.avm.rtda.Frame;
 import com.github.allenduke.avm.rtda.heap.AObject;
 
-public class aload_0 extends Index8Instruction {
+public class aload_0 extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x2a;
+        return CODE_aload_0;
     }
 
     @Override

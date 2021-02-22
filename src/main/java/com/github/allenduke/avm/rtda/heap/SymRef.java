@@ -32,7 +32,7 @@ public abstract class SymRef {
         Class cpClazz = constantPool.getClazz();    /* 该符号引用所在的类 */
         clazz = cpClazz.getClassLoader().loadClass(className);
         /* cpClazz要访问clazz */
-        if (clazz.isAccessibleTo(cpClazz)) {
+        if (!clazz.isAccessibleTo(cpClazz)) {
             throw new RuntimeException("java.lang.IllegalAccessError");
         }
     }

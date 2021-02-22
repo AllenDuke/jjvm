@@ -18,13 +18,11 @@ public class Slots {
     private Slot[] slots;
 
     public Slots(int maxLocals) {
-        if (maxLocals > 0) {    /* 初始化所有槽位 */
-            slots = new Slot[maxLocals];
-            for (int i = 0; i < maxLocals; i++) {
-                slots[i] = new Slot();
-            }
-        } else
-            System.exit(-1);
+        /* 初始化所有槽位 */
+        slots = new Slot[maxLocals];
+        for (int i = 0; i < maxLocals; i++) {
+            slots[i] = new Slot();
+        }
     }
 
     public void setInt(int index, int val) {

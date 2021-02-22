@@ -56,6 +56,7 @@ import com.github.allenduke.avm.instructions.math.sub.isub;
 import com.github.allenduke.avm.instructions.math.sub.lsub;
 import com.github.allenduke.avm.instructions.math.xor.ixor;
 import com.github.allenduke.avm.instructions.math.xor.lxor;
+import com.github.allenduke.avm.instructions.references.*;
 import com.github.allenduke.avm.instructions.stack.*;
 import com.github.allenduke.avm.instructions.stores.d.*;
 import com.github.allenduke.avm.instructions.stores.f.*;
@@ -262,6 +263,20 @@ public class InstructionFactory {
         putInstruction(new lstore_1());
         putInstruction(new lstore_2());
         putInstruction(new lstore_3());
+
+        putInstruction(new ldc());
+        putInstruction(new ldc_w());
+        putInstruction(new ldc2_w());
+
+        putInstruction(new new_());
+        putInstruction(new checkcast());
+        putInstruction(new getfield());
+        putInstruction(new getstatic());
+        putInstruction(new instanceof_());
+        putInstruction(new invokespecial());
+        putInstruction(new invokevirtual());
+        putInstruction(new putfield());
+        putInstruction(new putstatic());
 
     }
 

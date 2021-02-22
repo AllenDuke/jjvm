@@ -54,6 +54,7 @@ public class putfield extends Index16Instruction {
                     throw new RuntimeException("java.lang.NullPointerException");
                 }
                 ref.getFields().setInt(slotId, i);
+                break;
             case 'F':
                 float f = stack.popFloat();
                 ref = stack.popRef();
@@ -61,6 +62,7 @@ public class putfield extends Index16Instruction {
                     throw new RuntimeException("java.lang.NullPointerException");
                 }
                 ref.getFields().setFloat(slotId, f);
+                break;
             case 'J':
                 long l = stack.popLong();
                 ref = stack.popRef();
@@ -68,6 +70,7 @@ public class putfield extends Index16Instruction {
                     throw new RuntimeException("java.lang.NullPointerException");
                 }
                 ref.getFields().setLong(slotId, l);
+                break;
             case 'D':
                 double d = stack.popDouble();
                 ref = stack.popRef();
@@ -75,6 +78,7 @@ public class putfield extends Index16Instruction {
                     throw new RuntimeException("java.lang.NullPointerException");
                 }
                 ref.getFields().setDouble(slotId, d);
+                break;
             case 'L':
             case '[':
                 AObject r = stack.popRef();
@@ -83,6 +87,7 @@ public class putfield extends Index16Instruction {
                     throw new RuntimeException("java.lang.NullPointerException");
                 }
                 ref.getFields().setRef(slotId, r);
+                break;
             default:
                 // todo
         }

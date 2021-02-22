@@ -41,7 +41,7 @@ public class Method {
 
     public void copyAttributes(MethodInfo methodInfo) {
         CodeAttribute codeAttribute = methodInfo.getCodeAttribute();
-        if (code != null) {
+        if (codeAttribute != null) {
             this.maxStack = codeAttribute.getMaxStack();
             this.maxLocals = codeAttribute.getMaxLocals();
             this.code = codeAttribute.getCode();

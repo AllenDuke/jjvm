@@ -7,7 +7,7 @@ import com.github.allenduke.avm.rtda.heap.AObject;
 public class aload extends Index8Instruction {
     @Override
     public int getOpCode() {
-        return 0x19;
+        return CODE_aload;
     }
 
     @Override

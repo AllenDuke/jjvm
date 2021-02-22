@@ -110,7 +110,7 @@ public class ClassReader {
                     s = "0" + s;
                 }
             }
-            field_info.setAccessFlag(field_info.accessFlagsToString(s));
+            field_info.setAccessFlag(s);
             ConstantUtf8Info constant_utf8_info =
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             field_info.setName(constant_utf8_info.parseString());
@@ -184,7 +184,7 @@ public class ClassReader {
                 s = "0" + s;
             }
         }
-        classFile.setAccessFlags(accessFlagsToString(s));
+        classFile.setAccessFlags(s);
     }
 
     private String accessFlagsToString(String s) {

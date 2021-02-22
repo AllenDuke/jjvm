@@ -36,7 +36,8 @@ public class Field {
         this.name = info.getName();
         this.descriptor = info.getDescriptor();
         ConstantValueAttribute constantValueAttribute = info.getConstantValueAttribute();
-        this.constValueIndex = constantValueAttribute.getIndex();
+        if (constantValueAttribute != null)
+            this.constValueIndex = constantValueAttribute.getIndex();
     }
 
     public static Field[] newFields(Class clazz, FieldInfo[] fieldInfos) {

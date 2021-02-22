@@ -1,9 +1,6 @@
 package com.github.allenduke.avm.rtda.heap;
 
-import com.github.allenduke.avm.classfile.constant.ConstantFieldRefInfo;
-import com.github.allenduke.avm.classfile.constant.ConstantInfo;
-import com.github.allenduke.avm.classfile.constant.ConstantNameAndTypeInfo;
-import com.github.allenduke.avm.classfile.constant.ConstantUtf8Info;
+import com.github.allenduke.avm.classfile.constant.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +26,8 @@ public class FieldRef extends SymRef {
                                        ConstantFieldRefInfo fieldRefInfo) {
         FieldRef fieldRef = new FieldRef();
         fieldRef.setConstantPool(constantPool);
-        ConstantUtf8Info utf8Info = (ConstantUtf8Info) constantInfos[fieldRefInfo.getClassIndex()];
+        ConstantClassInfo classInfo=(ConstantClassInfo) constantInfos[fieldRefInfo.getClassIndex()];
+        ConstantUtf8Info utf8Info = (ConstantUtf8Info) constantInfos[classInfo.getNameIndex()];
         fieldRef.setClassName(utf8Info.parseString());
 
         ConstantNameAndTypeInfo nameAndTypeInfo =

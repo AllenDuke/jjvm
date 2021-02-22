@@ -15,6 +15,7 @@ public class Interpreter {
         byte[] byteCode = mainMethod.getCode();
         JThread jthread = new JThread(maxStack);
         Frame frame = new Frame(jthread, maxLocals, maxStack, mainMethod);
+//        frame.getSlots().setRef(0,);
         jthread.pushFrame(frame);
         loop(jthread, byteCode);
     }
@@ -35,6 +36,7 @@ public class Interpreter {
             frame.setNextPc(reader.getPc());
             instruction.execute(frame);
             System.out.print("   op:" + instruction.getReName());
+            System.out.print("   operandStack:" + frame.getOperandStack());
             System.out.println("   localVars:" + frame.getSlots());
         } while (opcode != Instruction.CODE_return);
 

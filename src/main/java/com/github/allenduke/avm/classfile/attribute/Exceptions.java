@@ -26,11 +26,11 @@ public class Exceptions extends AttributeInfo {
         setIndex(0);
         setNumber(read(2));
         ConstantClassInfo[] constant_class_infos = new ConstantClassInfo[getNumber()];
+        setExceptions(constant_class_infos);
         for (int i = 0; i < constant_class_infos.length; i++) {
             ConstantClassInfo constant_class_info = (ConstantClassInfo) classFile.getConstantPool()[read(2)];
             exceptions[i] = constant_class_info;
         }
-        setExceptions(constant_class_infos);
         return this;
     }
 }
