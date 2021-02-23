@@ -17,6 +17,7 @@ public class AObject {
     private Object extra;
 
     public static AObject newObject(Class clazz) {
+        // todo 这里应该是在堆中new
         AObject aObject = new AObject();
         aObject.clazz = clazz;
         aObject.data = new Slots((int) clazz.getInstanceSlotCount());

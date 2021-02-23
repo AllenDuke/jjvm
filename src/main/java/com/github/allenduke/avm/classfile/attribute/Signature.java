@@ -23,7 +23,8 @@ public class Signature extends AttributeInfo {
         }
         int index = read(2);
         ConstantUtf8Info constantUtf8Info = (ConstantUtf8Info) classFile.getConstantPool()[index];
-        setSignature(constantUtf8Info.parseString());
+        if (constantUtf8Info != null)   //fixme 签名解析异常
+            setSignature(constantUtf8Info.parseString());
         return this;
     }
 }
