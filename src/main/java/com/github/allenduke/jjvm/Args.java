@@ -6,6 +6,7 @@ import com.beust.jcommander.ParameterException;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.util.List;
 
 @Getter
@@ -50,10 +51,12 @@ public class Args {
 
         try {
             cmd.parse(argv);
+            if(args.jre==null){
+                args.jre=System.getenv("JAVA_HOME")+ File.separator+"jre";
+            }
             args.ok = true;
         } catch (ParameterException ignored) {
-            System.out.println(ignored);
-
+            ignored.printStackTrace();
         }
 
         return args;

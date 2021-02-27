@@ -8,21 +8,14 @@ package com.github.allenduke.jjvm;
  */
 public class Test {
 
-    public static int staticVar;
-
-    public int instanceVar;
-
     public static void main(String[] args) {
-        int x = 32768;
-        Test test = new Test();
-        Test.staticVar = x;
-        x = Test.staticVar;
-        test.instanceVar = x;
-        x = test.instanceVar;
-        Object o = test;
-        if (o instanceof Test) {
-            test = (Test) o;
-            System.out.println(test.instanceVar);
-        }
+        long x = fibonacci(30);
+        System.out.println(x);
     }
+
+    private static long fibonacci(long n) {
+        if (n <= 1) return n;
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
 }

@@ -85,4 +85,8 @@ public class OperandStack {     /* 每个方法的操作数栈，在编译时就
     public AObject popRef() {
         return popSlot().getRef();
     }
+
+    public AObject getRefFromTop(int i) {
+        return stacks.get(stacks.size() - 1 - i).getRef();
+    }
 }

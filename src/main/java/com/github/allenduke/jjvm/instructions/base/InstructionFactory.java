@@ -289,7 +289,7 @@ public class InstructionFactory {
     }
 
     public static Instruction getByOpcode(String name) throws Exception {
-        Instruction instruction = codeMap.get(name);
+        Instruction instruction = nameMap.get(name);
         if (instruction==null){
             throw new Exception("no operation code");
         }

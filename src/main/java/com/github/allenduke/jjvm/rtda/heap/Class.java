@@ -99,7 +99,7 @@ public class Class {
     }
 
     /* 判断当前是否实现了iface */
-    private boolean isImplements(Class iface) {
+    public boolean isImplements(Class iface) {
         Class cur = this;
         while (cur != null) {
             for (Class i : cur.getInterfaces()) {
@@ -161,8 +161,17 @@ public class Class {
     }
 
     private boolean isArray() {
+
         return false;
     }
 
 
+    public boolean isSuperClassOf(Class other) {
+        return other.isSubClassOf(this);
+    }
+
+    public boolean isSuper() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_SUPER);
+    }
 }

@@ -25,8 +25,8 @@ public class JThread {
         return this.stack.pop();
     }
 
-    public Frame currentFrame() {
-        return this.stack.current();
+    public Frame topFrame() {
+        return this.stack.top();
     }
 
 

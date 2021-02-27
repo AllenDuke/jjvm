@@ -5,7 +5,7 @@ import com.github.allenduke.jjvm.rtda.heap.Class;
 import com.github.allenduke.jjvm.rtda.heap.ClassLoader;
 import com.github.allenduke.jjvm.rtda.heap.Method;
 
-import java.util.Arrays;
+import java.io.File;
 
 /**
  * @author allen
@@ -16,9 +16,6 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        for (String arg : args) {
-            System.out.println(arg);
-        }
         Args argv = Args.parse(args);
         if(!argv.ok){
             System.out.println("args parse err");
@@ -34,7 +31,7 @@ public class Main {
     }
 
     private static void startJVM(Args args) {
-        String mainClassPath = args.getMainClass().replace(".", "/");
+        String mainClassPath = args.getMainClass().replace(".", File.separator);
         Classpath cp = new Classpath(args.jre, args.classpath);
         System.out.printf("classpath:%s class:%s args:%s\n",
                 cp, args.getMainClass(), args.getAppArgs());
@@ -52,15 +49,10 @@ public class Main {
             }
             System.out.println("]");
 
-//            ClassReader reader = new ClassReader(classData);
-//            ClassFile classFile = reader.parseClassFile();
-//            MethodInfo mainMethod = classFile.getMainMethod();
-
             ClassLoader classLoader = ClassLoader.newClassLoader(cp);
             Class mainClass = classLoader.loadClass(mainClassPath);
             Method mainMethod = mainClass.getMainMethod();
             Interpreter.execute(mainMethod);
-            System.out.println("class data:" + Arrays.toString(classData));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("could not find or load main class" + args.getMainClass());

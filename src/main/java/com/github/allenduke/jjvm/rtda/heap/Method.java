@@ -33,6 +33,8 @@ public class Method {
 
     private byte[] code;
 
+    private int argSlotCount;
+
     public void copyMethodInfo(MethodInfo info) {
         this.accessFlags = info.getAccessFlags();
         this.name = info.getName();
@@ -55,7 +57,89 @@ public class Method {
             methods[i].clazz = clazz;
             methods[i].copyMethodInfo(methodInfos[i]);
             methods[i].copyAttributes(methodInfos[i]);
+            methods[i].calcArgSlotCount();
         }
         return methods;
+    }
+
+    public static Method lookupMethodInClass(Class clazz, String name, String descriptor) {
+        Class cur = clazz;
+        while (cur != null) {
+            for (Method method : cur.getMethods()) {
+                if (method.name.equals(name) && method.descriptor.equals(descriptor))
+                    return method;
+            }
+            cur = cur.getSuperClass();
+        }
+        return null;
+    }
+
+    public static Method lookupMethodInInterfaces(Class[] ifaces, String name, String descriptor) {
+        for (Class iface : ifaces) {
+            for (Method method : iface.getMethods()) {
+                if (method.name.equals(name) && method.getDescriptor().equals(descriptor))
+                    return method;
+            }
+            Method method = lookupMethodInInterfaces(iface.getInterfaces(), name, descriptor);
+            if (method != null) return method;
+        }
+        return null;
+    }
+
+    public boolean isPublic() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_PUBLIC);
+    }
+
+    public boolean isProtected() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_PROTECTED);
+    }
+
+    public boolean isPrivate() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_PRIVATE);
+    }
+
+    public boolean isAccessibleTo(Class other) {
+        if (isPublic()) return true;
+        if (isProtected()) {
+            return other == clazz || other.isSubClassOf(clazz) || clazz.getPackageName().equals(other.getPackageName());
+        }
+        if (!isPrivate()) {
+            return clazz.getPackageName().equals(other.getPackageName());
+        }
+        return clazz == other;
+    }
+
+    public void calcArgSlotCount() {
+        MethodDescriptor parsedDescriptor = MethodDescriptorParser.parseMethodDescriptor(this.descriptor);
+
+        parsedDescriptor.getParameterTypes().forEach(paramType -> {
+            this.argSlotCount++;
+            if (paramType.equals("J") || paramType.equals("D")) {
+                this.argSlotCount++;
+            }
+        });
+
+        if (!this.isStatic()) {
+            this.argSlotCount++;
+        }
+
+    }
+
+    public boolean isStatic() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_STATIC);
+    }
+
+    public boolean isNative() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_NATIVE);
+    }
+
+    public boolean isAbstract() {
+        int flag = Integer.valueOf(accessFlags, 16);
+        return 0 != (flag & AccessFlags.ACC_ABSTRACT);
     }
 }

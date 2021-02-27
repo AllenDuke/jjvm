@@ -9,7 +9,7 @@ public class ldc2_w extends Index16Instruction {
 
     @Override
     public int getOpCode() {
-        return 0x14;
+        return CODE_ldc2_w;
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Stack {            /* 如果Stack在运行时扩展，遇到内存�
         return pop;
     }
 
-    public Frame current() {
+    public Frame top() {
         Frame peek = stacks.peek();
         if (peek == null) {
             System.out.println("java stack is empty");

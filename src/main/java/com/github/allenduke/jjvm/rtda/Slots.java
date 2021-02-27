@@ -70,4 +70,8 @@ public class Slots {
     public AObject getRef(int index) {
         return slots[index].getRef();
     }
+
+    public void setSlot(int i, Slot slot) {
+        this.slots[i] = slot;
+    }
 }
