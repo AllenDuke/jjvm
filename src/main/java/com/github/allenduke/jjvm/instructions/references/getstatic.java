@@ -1,5 +1,6 @@
 package com.github.allenduke.jjvm.instructions.references;
 
+import com.github.allenduke.jjvm.instructions.base.ClassInitLogic;
 import com.github.allenduke.jjvm.instructions.base.Index16Instruction;
 import com.github.allenduke.jjvm.rtda.Frame;
 import com.github.allenduke.jjvm.rtda.OperandStack;
@@ -27,6 +28,12 @@ public class getstatic extends Index16Instruction {
         FieldRef fieldRef = (FieldRef) constantPool.getConstant(index);
         Field field = fieldRef.resolvedField();
         Class clazz = field.getClazz();
+
+        if (!clazz.isInitStarted()) {
+            frame.revertNextPc();
+            ClassInitLogic.initClass(frame.getJthread(), clazz);
+            return;
+        }
 
         if (!field.isStatic()) {
             throw new RuntimeException("java.lang.IncompatibleClassChangeError");

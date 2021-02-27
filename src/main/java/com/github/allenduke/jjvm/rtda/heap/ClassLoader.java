@@ -19,7 +19,7 @@ public class ClassLoader {
 
     private Classpath classpath;
 
-    /* key为类的全限定名 */
+    /* key为类的全限定名，可以认为这是方法区或者元空间的一部分 */
     private Map<String, Class> classMap;
 
     public static ClassLoader newClassLoader(Classpath classpath) {

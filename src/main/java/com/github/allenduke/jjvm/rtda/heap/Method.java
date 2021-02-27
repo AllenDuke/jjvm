@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 public class Method {
 
-    private String accessFlags;
+    private int accessFlags;        /* u2 */
 
     private String name;
 
@@ -23,7 +23,7 @@ public class Method {
 
     private String signature;
 
-    private byte[] annotationData; // RuntimeVisibleAnnotations_attribute
+    private byte[] annotationData;  // RuntimeVisibleAnnotations_attribute
 
     private Class clazz;
 
@@ -87,18 +87,15 @@ public class Method {
     }
 
     public boolean isPublic() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PUBLIC);
+        return 0 != (accessFlags & AccessFlags.ACC_PUBLIC);
     }
 
     public boolean isProtected() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PROTECTED);
+        return 0 != (accessFlags & AccessFlags.ACC_PROTECTED);
     }
 
     public boolean isPrivate() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PRIVATE);
+        return 0 != (accessFlags & AccessFlags.ACC_PRIVATE);
     }
 
     public boolean isAccessibleTo(Class other) {
@@ -129,17 +126,14 @@ public class Method {
     }
 
     public boolean isStatic() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_STATIC);
+        return 0 != (accessFlags & AccessFlags.ACC_STATIC);
     }
 
     public boolean isNative() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_NATIVE);
+        return 0 != (accessFlags & AccessFlags.ACC_NATIVE);
     }
 
     public boolean isAbstract() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_ABSTRACT);
+        return 0 != (accessFlags & AccessFlags.ACC_ABSTRACT);
     }
 }

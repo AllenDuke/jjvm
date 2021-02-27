@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class MethodInfo {
 
-    private String accessFlags;
+    private int accessFlags;
 
     private String name;
 

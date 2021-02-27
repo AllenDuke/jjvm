@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 public class Field {
 
-    private String accessFlags;
+    private int accessFlags;
 
     private String name;
 
@@ -51,13 +51,11 @@ public class Field {
     }
 
     public boolean isStatic() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_STATIC);
+        return 0 != (accessFlags & AccessFlags.ACC_STATIC);
     }
 
     public boolean isFinal() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_FINAL);
+        return 0 != (accessFlags & AccessFlags.ACC_FINAL);
     }
 
     public boolean isLongOrDouble() {
@@ -65,18 +63,15 @@ public class Field {
     }
 
     public boolean isPublic() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PUBLIC);
+        return 0 != (accessFlags & AccessFlags.ACC_PUBLIC);
     }
 
     public boolean isProtected() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PROTECTED);
+        return 0 != (accessFlags & AccessFlags.ACC_PROTECTED);
     }
 
     public boolean isPrivate() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PRIVATE);
+        return 0 != (accessFlags & AccessFlags.ACC_PRIVATE);
     }
 
     public boolean isAccessibleTo(Class other) {

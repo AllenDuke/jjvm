@@ -14,7 +14,7 @@ import lombok.Setter;
  * @date 2021/2/21
  */
 public class Class {
-    private String accessFlags;    /* uint16 */
+    private int accessFlags;    /* uint16 */
 
     private String name;
 
@@ -40,6 +40,8 @@ public class Class {
 
     private Slots staticVars;
 
+    private boolean initStarted;        /* 是否已经初始化 */
+
     public static Class newClass(ClassFile classFile) {
         Class clazz = new Class();
         clazz.accessFlags = classFile.getAccessFlags();
@@ -52,13 +54,12 @@ public class Class {
         return clazz;
     }
 
+    public void startInit() {
+        initStarted = true;
+    }
+
     public Method getMainMethod() {
-        for (Method m : methods) {
-            if ("main".equals(m.getName()) && "([Ljava/lang/String;)V".equals(m.getDescriptor())) {
-                return m;
-            }
-        }
-        return null;
+        return getStaticMethod("main","([Ljava/lang/String;)V");
     }
 
     /* 取包名 */
@@ -69,8 +70,7 @@ public class Class {
     }
 
     public boolean isPublic() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_PUBLIC);
+        return 0 != (accessFlags & AccessFlags.ACC_PUBLIC);
     }
 
     /* 当前类是否接受other访问，取决于当前是否public，或者当前与other同包 */
@@ -79,13 +79,11 @@ public class Class {
     }
 
     public boolean isInterface() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_INTERFACE);
+        return 0 != (accessFlags & AccessFlags.ACC_INTERFACE);
     }
 
     public boolean isAbstract() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_ABSTRACT);
+        return 0 != (accessFlags & AccessFlags.ACC_ABSTRACT);
     }
 
     /* 判断当前类是否是clazz的子类 */
@@ -171,7 +169,19 @@ public class Class {
     }
 
     public boolean isSuper() {
-        int flag = Integer.valueOf(accessFlags, 16);
-        return 0 != (flag & AccessFlags.ACC_SUPER);
+        return 0 != (accessFlags & AccessFlags.ACC_SUPER);
+    }
+
+    public Method getClinitMethod() {
+        return this.getStaticMethod("<clinit>","()V");
+    }
+
+    private Method getStaticMethod(String name,String descriptor){
+        for (Method m : methods) {
+            if (name.equals(m.getName()) && descriptor.equals(m.getDescriptor())) {
+                return m;
+            }
+        }
+        return null;
     }
 }

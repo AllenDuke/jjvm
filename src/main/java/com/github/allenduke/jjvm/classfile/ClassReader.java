@@ -64,13 +64,7 @@ public class ClassReader {
         MethodInfo[] method_infos = new MethodInfo[classFile.getMethodsCount()];
         for (int i = 0; i < method_infos.length; i++) {
             MethodInfo method_info = new MethodInfo();
-            String s = toHexString(readU2Byte());
-            if (s.length() < 4) {
-                for (; 0 < 4 - s.length(); ) {
-                    s = "0" + s;
-                }
-            }
-            method_info.setAccessFlags(s);
+            method_info.setAccessFlags(readU2());
             ConstantUtf8Info constant_utf8_info =
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             method_info.setName(constant_utf8_info.parseString());
@@ -104,13 +98,7 @@ public class ClassReader {
         FieldInfo[] field_infos = new FieldInfo[classFile.getFieldsCount()];
         for (int i = 0; i < field_infos.length; i++) {
             FieldInfo field_info = new FieldInfo();
-            String s = toHexString(readU2Byte());
-            if (s.length() < 4) {
-                for (; 0 < 4 - s.length(); ) {
-                    s = "0" + s;
-                }
-            }
-            field_info.setAccessFlag(s);
+            field_info.setAccessFlag(readU2());
             ConstantUtf8Info constant_utf8_info =
                     (ConstantUtf8Info) classFile.getConstantPool()[readU2()];
             field_info.setName(constant_utf8_info.parseString());
@@ -178,13 +166,7 @@ public class ClassReader {
     }
 
     private void parseAccessFlags(ClassFile classFile) {
-        String s = toHexString(readU2Byte());
-        if (s.length() < 4) {
-            for (; 0 < 4 - s.length(); ) {
-                s = "0" + s;
-            }
-        }
-        classFile.setAccessFlags(s);
+        classFile.setAccessFlags(readU2());
     }
 
     private String accessFlagsToString(String s) {

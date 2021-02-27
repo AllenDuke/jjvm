@@ -43,7 +43,7 @@ public class ClassFile {
 
     private ConstantInfo[] constantPool;        /* 常量池 */
 
-    private String accessFlags;                 /* 类访问标志，类 接口 public private, 16bit */
+    private int accessFlags;                 /* 类访问标志，类 接口 public private, 16bit */
 
     private String className;                   /* 类名 */
 

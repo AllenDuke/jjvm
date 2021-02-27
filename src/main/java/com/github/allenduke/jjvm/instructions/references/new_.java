@@ -1,5 +1,6 @@
 package com.github.allenduke.jjvm.instructions.references;
 
+import com.github.allenduke.jjvm.instructions.base.ClassInitLogic;
 import com.github.allenduke.jjvm.instructions.base.Index16Instruction;
 import com.github.allenduke.jjvm.rtda.Frame;
 import com.github.allenduke.jjvm.rtda.heap.AObject;
@@ -26,7 +27,13 @@ public class new_ extends Index16Instruction {
         ClassRef classRef = (ClassRef) constantPool.getConstant(index);
         Class clazz = classRef.resolvedClass();
 
-        if(clazz.isInterface()||clazz.isAbstract()){
+        if (!clazz.isInitStarted()) {
+            frame.revertNextPc();
+            ClassInitLogic.initClass(frame.getJthread(), clazz);
+            return;
+        }
+
+        if (clazz.isInterface() || clazz.isAbstract()) {
             throw new RuntimeException("java.lang.InstantiationError");
         }
 

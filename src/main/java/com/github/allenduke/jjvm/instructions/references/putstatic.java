@@ -1,11 +1,12 @@
 package com.github.allenduke.jjvm.instructions.references;
 
+import com.github.allenduke.jjvm.instructions.base.ClassInitLogic;
 import com.github.allenduke.jjvm.instructions.base.Index16Instruction;
 import com.github.allenduke.jjvm.rtda.Frame;
 import com.github.allenduke.jjvm.rtda.OperandStack;
 import com.github.allenduke.jjvm.rtda.Slots;
-import com.github.allenduke.jjvm.rtda.heap.*;
 import com.github.allenduke.jjvm.rtda.heap.Class;
+import com.github.allenduke.jjvm.rtda.heap.*;
 
 /**
  * @author allen
@@ -30,7 +31,11 @@ public class putstatic extends Index16Instruction {
         Field field = fieldRef.resolvedField();
         Class clazz = field.getClazz();
 
-        // todo 如果类还没有初始化，需要先初始化该类
+        if (!clazz.isInitStarted()) {
+            frame.revertNextPc();
+            ClassInitLogic.initClass(frame.getJthread(), clazz);
+            return;
+        }
 
         if (!field.isStatic()) {
             throw new RuntimeException("java.lang.IncompatibleClassChangeError");

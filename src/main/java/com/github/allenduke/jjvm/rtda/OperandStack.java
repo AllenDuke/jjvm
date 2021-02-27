@@ -18,10 +18,9 @@ public class OperandStack {     /* 每个方法的操作数栈，在编译时就
 
     public OperandStack(int maxStack) {
         this.maxStack = maxStack;
-        if (maxStack > 0) {
+        if (maxStack >= 0) {
             stacks = new Stack<>();
-        } else
-            System.exit(-1);
+        } else throw new RuntimeException("operandStack size err");
     }
 
     public void pushSlot(Slot slot) throws RuntimeException {

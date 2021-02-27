@@ -11,7 +11,7 @@ import lombok.Setter;
 public class FieldInfo {
 
     //U2
-    private String accessFlag;
+    private int accessFlag;
 
     //U2
     private String name;
