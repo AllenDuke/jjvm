@@ -21,10 +21,14 @@ public class Signature extends AttributeInfo {
         if (!getName().equals(this.getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
-        int index = read(2);
-        ConstantUtf8Info constantUtf8Info = (ConstantUtf8Info) classFile.getConstantPool()[index];
-        if (constantUtf8Info != null)   //fixme 签名解析异常
+        try {
+            int index = read(2);
+            ConstantUtf8Info constantUtf8Info = (ConstantUtf8Info) classFile.getConstantPool()[index];
             setSignature(constantUtf8Info.parseString());
+        } catch (Exception e) {
+            //todo 签名解析异常
+            System.out.println(e);
+        }
         return this;
     }
 }

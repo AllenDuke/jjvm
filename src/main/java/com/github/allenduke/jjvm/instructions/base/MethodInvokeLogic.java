@@ -20,7 +20,7 @@ public class MethodInvokeLogic {
 
         int argSlotCount = method.getArgSlotCount();
         if (argSlotCount > 0) {
-            for (int i = argSlotCount - 1; i >= 0; i++) {
+            for (int i = argSlotCount - 1; i >= 0; i--) {
                 Slot slot = invokerFrame.getOperandStack().popSlot();
                 newFrame.getSlots().setSlot(i, slot);
             }

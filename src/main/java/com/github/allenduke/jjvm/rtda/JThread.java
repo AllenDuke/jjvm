@@ -30,4 +30,7 @@ public class JThread {
     }
 
 
+    public boolean isStackEmpty() {
+        return stack.getStacks().isEmpty();
+    }
 }

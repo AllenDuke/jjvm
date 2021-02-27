@@ -1,9 +1,9 @@
 package com.github.allenduke.jjvm.instructions.loads.d;
 
-import com.github.allenduke.jjvm.instructions.base.Index8Instruction;
+import com.github.allenduke.jjvm.instructions.base.NoOperandsInstruction;
 import com.github.allenduke.jjvm.rtda.Frame;
 
-public class dload_3 extends Index8Instruction {
+public class dload_3 extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
         return CODE_dload_3;

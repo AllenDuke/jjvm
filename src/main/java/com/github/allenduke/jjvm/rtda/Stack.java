@@ -21,8 +21,7 @@ public class Stack {            /* 如果Stack在运行时扩展，遇到内存�
     public void push(Frame frame) {
         if (this.size >= maxSize) {
             // todo 遍历java虚拟机栈，检查方法的异常处理表
-            System.out.println("java.lang.StackOverflowError");
-            System.exit(1);
+            throw new RuntimeException("java.lang.StackOverflowError");
         }
         stacks.push(frame);
         size++;

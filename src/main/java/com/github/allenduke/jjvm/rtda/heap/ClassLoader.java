@@ -5,6 +5,7 @@ import com.github.allenduke.jjvm.classfile.ClassReader;
 import com.github.allenduke.jjvm.classpath.Classpath;
 import com.github.allenduke.jjvm.rtda.Slots;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class ClassLoader {
     }
 
     public Class loadClass(String name) {
+        name = name.replace( File.separatorChar,'/');
         Class clazz = classMap.get(name);
         if (clazz == null) {
             clazz = loadNonArrayClass(name);
@@ -46,6 +48,8 @@ public class ClassLoader {
     }
 
     private byte[] readClass(String name) {
+        name = name.replace('\\', File.separatorChar);
+        name = name.replace('/', File.separatorChar);
         try {
             return classpath.readClass(name);
         } catch (Exception e) {

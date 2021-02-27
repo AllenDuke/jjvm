@@ -65,8 +65,18 @@ public class CodeAttribute extends AttributeInfo {
             attribute_infos[i] = attribute_info.parseAttribute(classFile);
         }
         setAttributes(attribute_infos);
-        return this;
+        CodeAttribute codeAttribute = new CodeAttribute();
+        codeAttribute.maxLocals = maxLocals;
+        codeAttribute.maxStack = maxStack;
+        codeAttribute.attributes = attributes;
+        codeAttribute.attributes_count = attributes_count;
+        codeAttribute.code = code;
+        codeAttribute.codeLength = codeLength;
+        codeAttribute.exception_table = exception_table;
+        codeAttribute.exception_table_length = exception_table_length;
+        return codeAttribute;
     }
+
 
     @Getter
     @Setter

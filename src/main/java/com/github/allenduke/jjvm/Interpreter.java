@@ -13,7 +13,7 @@ public class Interpreter {
         int maxStack = (int) mainMethod.getMaxStack();
         int maxLocals = (int) mainMethod.getMaxLocals();
         byte[] byteCode = mainMethod.getCode();
-        JThread jthread = new JThread(maxStack);
+        JThread jthread = new JThread(1024);
         Frame frame = new Frame(jthread, maxLocals, maxStack, mainMethod);
 //        frame.getSlots().setRef(0,);
         jthread.pushFrame(frame);
@@ -21,14 +21,15 @@ public class Interpreter {
     }
 
     public static void loop(JThread jthread, byte[] byteCode) throws Exception {
-        Frame frame = jthread.popFrame();
-        BytecodeReader reader = new BytecodeReader(byteCode, frame.getNextPc());
+        Frame frame = null;
+        BytecodeReader reader = new BytecodeReader(byteCode, 0);
         int opcode;
         do {
+            frame = jthread.topFrame();
             int pc = frame.getNextPc();
             jthread.setPc(pc);
-            System.out.print("pc:" + reader.getPc());
-            reader.reset(byteCode, pc);
+            System.out.print("pc:" + pc);
+            reader.reset(frame.getMethod().getCode(), pc);
             opcode = reader.readUInt8();
             System.out.print("    opcode:" + opcode);
             Instruction instruction = InstructionFactory.getByOpcode(opcode);
@@ -38,7 +39,7 @@ public class Interpreter {
             System.out.print("   op:" + instruction.getReName());
             System.out.print("   operandStack:" + frame.getOperandStack());
             System.out.println("   localVars:" + frame.getSlots());
-        } while (opcode != Instruction.CODE_return);
+        } while (!jthread.isStackEmpty());
 
     }
 }

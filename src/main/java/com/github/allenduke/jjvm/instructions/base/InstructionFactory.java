@@ -278,6 +278,8 @@ public class InstructionFactory {
         putInstruction(new putfield());
         putInstruction(new putstatic());
 
+        putInstruction(new invokestatic());
+
     }
 
     public static Instruction getByOpcode(int opcode) throws Exception {
