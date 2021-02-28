@@ -25,7 +25,7 @@ public class OperandStack {     /* 每个方法的操作数栈，在编译时就
 
     public void pushSlot(Slot slot) throws RuntimeException {
         if (stacks.size() >= maxStack) {
-            throw new RuntimeException("size > maxStack");
+//            throw new RuntimeException("size > maxStack"); // todo 可以超过最大栈的吗？
         }
         stacks.push(slot);
     }

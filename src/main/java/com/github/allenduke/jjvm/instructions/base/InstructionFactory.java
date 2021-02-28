@@ -58,6 +58,7 @@ import com.github.allenduke.jjvm.instructions.math.xor.ixor;
 import com.github.allenduke.jjvm.instructions.math.xor.lxor;
 import com.github.allenduke.jjvm.instructions.references.*;
 import com.github.allenduke.jjvm.instructions.stack.*;
+import com.github.allenduke.jjvm.instructions.stores.array.iastore;
 import com.github.allenduke.jjvm.instructions.stores.d.*;
 import com.github.allenduke.jjvm.instructions.stores.f.*;
 import com.github.allenduke.jjvm.instructions.stores.i.*;
@@ -186,7 +187,6 @@ public class InstructionFactory {
         putInstruction(new lload_2());
         putInstruction(new lload_3());
         putInstruction(new saload());
-        putInstruction(new xaload());
 
 
         putInstruction(new dadd());
@@ -279,7 +279,12 @@ public class InstructionFactory {
         putInstruction(new putstatic());
 
         putInstruction(new invokestatic());
+        putInstruction(new anewarray());
+        putInstruction(new arraylength());
+        putInstruction(new newarray());
+        putInstruction(new multianewarray());
 
+        putInstruction(new iastore());
     }
 
     public static Instruction getByOpcode(int opcode) throws Exception {

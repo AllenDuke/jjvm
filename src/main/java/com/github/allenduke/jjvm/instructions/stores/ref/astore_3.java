@@ -7,7 +7,7 @@ import com.github.allenduke.jjvm.rtda.heap.AObject;
 public class astore_3 extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x4e;
+        return CODE_astore_3;
     }
 
     @Override

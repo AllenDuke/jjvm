@@ -28,17 +28,17 @@ public class Interpreter {
             frame = jthread.topFrame();
             int pc = frame.getNextPc();
             jthread.setPc(pc);
-            System.out.print("pc:" + pc);
             reader.reset(frame.getMethod().getCode(), pc);
             opcode = reader.readUInt8();
-            System.out.print("    opcode:" + opcode);
             Instruction instruction = InstructionFactory.getByOpcode(opcode);
             instruction.fetchOperands(reader);
             frame.setNextPc(reader.getPc());
             instruction.execute(frame);
-            System.out.print("   op:" + instruction.getReName());
-            System.out.print("   operandStack:" + frame.getOperandStack());
-            System.out.println("   localVars:" + frame.getSlots());
+//            System.out.print("pc:" + pc);
+//            System.out.print("    opcode:" + opcode);
+//            System.out.print("   op:" + instruction.getReName());
+//            System.out.print("   operandStack:" + frame.getOperandStack());
+//            System.out.println("   localVars:" + frame.getSlots());
         } while (!jthread.isStackEmpty());
 
     }

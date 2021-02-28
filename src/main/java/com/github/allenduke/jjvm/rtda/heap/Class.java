@@ -59,7 +59,7 @@ public class Class {
     }
 
     public Method getMainMethod() {
-        return getStaticMethod("main","([Ljava/lang/String;)V");
+        return getStaticMethod("main", "([Ljava/lang/String;)V");
     }
 
     /* 取包名 */
@@ -118,28 +118,27 @@ public class Class {
 
     public boolean IsAssignableFrom(Class other) {
         if (other == this) return true;
-        if (!this.isInterface()) return other.isSubClassOf(this);
-        else return other.isImplements(this);
-//        if (!other.isArray()) {
-//            if (!other.isInterface()) {
-//                if(!this.isInterface()) return other.isSubClassOf(this);
-//                else return other.isImplements(this);
-//            } else {
-//                if(!this.isInterface()) return this.isJlObject();
-//                else return this.isSuperInterfaceOf(other);
-//            }
-//        } else {
-//            if (!this.isArray()) {
-//                if (!this.isInterface()) return this.isJlObject();
-//                else return this.isJlCloneable() || this.isJioSerializable();
-//
-//            } else{
-//                sc:=s.ComponentClass();
-//                tc:=t.ComponentClass()
-//                return sc == tc || tc.IsAssignableFrom(sc)
-//            }
-//        }
-//        return false;
+
+        if (!other.isArray()) {
+            if (!other.isInterface()) {
+                if (!this.isInterface()) return other.isSubClassOf(this);
+                else return other.isImplements(this);
+            } else {
+                if (!this.isInterface()) return this.isJlObject();
+                else return this.isSuperInterfaceOf(other);
+            }
+        } else {
+            if (!this.isArray()) {
+                if (!this.isInterface()) return this.isJlObject();
+                else return this.isJlCloneable() || this.isJioSerializable();
+
+            } else {
+                Class otherComponentClass = other.getComponentClass();
+                Class thisComponentClass = this.getComponentClass();
+                return otherComponentClass == thisComponentClass || thisComponentClass.IsAssignableFrom(otherComponentClass);
+            }
+        }
+
     }
 
     private boolean isJioSerializable() {
@@ -159,10 +158,8 @@ public class Class {
     }
 
     private boolean isArray() {
-
-        return false;
+        return this.name.charAt(0) == '[';
     }
-
 
     public boolean isSuperClassOf(Class other) {
         return other.isSubClassOf(this);
@@ -173,10 +170,10 @@ public class Class {
     }
 
     public Method getClinitMethod() {
-        return this.getStaticMethod("<clinit>","()V");
+        return this.getStaticMethod("<clinit>", "()V");
     }
 
-    private Method getStaticMethod(String name,String descriptor){
+    private Method getStaticMethod(String name, String descriptor) {
         for (Method m : methods) {
             if (name.equals(m.getName()) && descriptor.equals(m.getDescriptor())) {
                 return m;
@@ -184,4 +181,51 @@ public class Class {
         }
         return null;
     }
+
+    public AObject newArray(int length) {
+        if (!this.isArray()) {
+            throw new RuntimeException("Not array class: " + this.name);
+        }
+
+        AObject ref = AObject.newObject(this);
+        switch (this.name) {
+            case "[Z":
+            case "[B":
+                ref.setData(new byte[length]);
+                return ref;
+            case "[C":
+                ref.setData(new char[length]);
+                return ref;
+            case "[S":
+                ref.setData(new short[length]);
+                return ref;
+            case "[I":
+                ref.setData(new int[length]);
+                return ref;
+            case "[J":
+                ref.setData(new long[length]);
+                return ref;
+            case "[F":
+                ref.setData(new float[length]);
+                return ref;
+            case "[D":
+                ref.setData(new double[length]);
+                return ref;
+            default:
+                ref.setData(new AObject[length]);
+                return ref;
+
+        }
+    }
+
+    public Class getComponentClass() {
+        String componentClassName = ClassNameHelper.getComponentClassName(this.name);
+        return this.classLoader.loadClass(componentClassName);
+    }
+
+    public Class arrayClass() {
+        String arrayClassName = ClassNameHelper.getArrayClassName(this.name);
+        return this.classLoader.loadClass(arrayClassName);
+    }
+
 }

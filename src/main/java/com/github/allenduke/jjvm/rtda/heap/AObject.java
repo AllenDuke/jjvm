@@ -38,4 +38,59 @@ public class AObject {
     public boolean isInstanceOf(Class clazz) {
         return clazz.IsAssignableFrom(this.clazz);
     }
+
+    public byte[] bytes() {
+        return (byte[]) this.data;
+    }
+
+    public short[] shorts() {
+        return (short[]) this.data;
+    }
+
+    public char[] chars() {
+        return (char[]) this.data;
+    }
+
+    public int[] ints() {
+        return (int[]) this.data;
+    }
+
+    public long[] longs() {
+        return (long[]) this.data;
+    }
+
+    public float[] floats() {
+        return (float[]) this.data;
+    }
+
+    public double[] doubles() {
+        return (double[]) this.data;
+    }
+
+    public AObject[] refs() {
+        return (AObject[]) this.data;
+    }
+
+    public int arrayLength() {
+        switch (this.data.getClass().getSimpleName()) {
+            case "byte[]":
+                return ((byte[]) this.data).length;
+            case "short[]":
+                return ((short[]) this.data).length;
+            case "char[]":
+                return ((char[]) this.data).length;
+            case "int[]":
+                return ((int[]) this.data).length;
+            case "long[]":
+                return ((long[]) this.data).length;
+            case "float[]":
+                return ((float[]) this.data).length;
+            case "double[]":
+                return ((double[]) this.data).length;
+            case "AObject[]":
+                return ((AObject[]) this.data).length;
+            default:
+                throw new RuntimeException("Not array!");
+        }
+    }
 }

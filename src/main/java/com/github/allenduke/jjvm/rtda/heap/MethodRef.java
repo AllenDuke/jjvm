@@ -46,6 +46,7 @@ public class MethodRef extends SymRef {
         return this.method;
     }
 
+    //todo 用map优化，加快查找
     public void resolveMethodRef() {
         Class cpClazz = this.getConstantPool().getClazz();
         Class clazz = this.resolvedClass();

@@ -7,7 +7,7 @@ import com.github.allenduke.jjvm.rtda.OperandStack;
 public class i2c extends NoOperandsInstruction {
     @Override
     public int getOpCode() {
-        return 0x92;
+        return CODE_i2c;
     }
 
     @Override

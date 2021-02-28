@@ -30,13 +30,25 @@ public class ClassLoader {
     }
 
     public Class loadClass(String name) {
-        name = name.replace( File.separatorChar,'/');
+        name = name.replace(File.separatorChar, '/');
         Class clazz = classMap.get(name);
         if (clazz == null) {
-            clazz = loadNonArrayClass(name);
+            if (name.charAt(0) == '[') clazz = loadArrayClass(name);
+            else clazz = loadNonArrayClass(name);
             classMap.put(name, clazz);
         }
         return clazz;
+    }
+
+    private Class loadArrayClass(String name) {
+        Class aClass = new Class();
+        aClass.startInit();
+        aClass.setAccessFlags(AccessFlags.ACC_PUBLIC); // todo
+        aClass.setName(name);
+        aClass.setClassLoader(this);
+        aClass.setSuperClass(loadClass("java/lang/Object"));
+        aClass.setInterfaces(new Class[]{loadClass("java/lang/Cloneable"), loadClass("java/io/Serializable")});
+        return aClass;
     }
 
     private Class loadNonArrayClass(String name) {
@@ -97,7 +109,7 @@ public class ClassLoader {
         prepare(clazz);
     }
 
-    /* java虚拟机规范要求在执行类的任何代码前要先验证 */
+    /* todo java虚拟机规范要求在执行类的任何代码前要先验证 */
     private static void verify(Class clazz) {
 
     }

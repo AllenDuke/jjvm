@@ -7,7 +7,7 @@ import com.github.allenduke.jjvm.rtda.heap.AObject;
 public class astore extends Index8Instruction {
     @Override
     public int getOpCode() {
-        return 0x3a;
+        return CODE_astore;
     }
 
     @Override
