@@ -5,18 +5,23 @@ import com.github.allenduke.jjvm.instructions.base.Instruction;
 import com.github.allenduke.jjvm.instructions.base.InstructionFactory;
 import com.github.allenduke.jjvm.rtda.Frame;
 import com.github.allenduke.jjvm.rtda.JThread;
-import com.github.allenduke.jjvm.rtda.heap.Method;
+import com.github.allenduke.jjvm.rtda.heap.Class;
+import com.github.allenduke.jjvm.rtda.heap.ClassLoader;
+import com.github.allenduke.jjvm.rtda.heap.*;
+
+import java.util.List;
 
 public class Interpreter {
 
-    public static void execute(Method mainMethod) throws Exception {
+    public static void execute(Method mainMethod, List<String> args) throws Exception {
         int maxStack = (int) mainMethod.getMaxStack();
         int maxLocals = (int) mainMethod.getMaxLocals();
         byte[] byteCode = mainMethod.getCode();
         JThread jthread = new JThread(1024);
         Frame frame = new Frame(jthread, maxLocals, maxStack, mainMethod);
-//        frame.getSlots().setRef(0,);
         jthread.pushFrame(frame);
+        AObject jArgs = createArgsArray(mainMethod.getClazz().getClassLoader(), args);
+        frame.getSlots().setRef(0, jArgs);
         loop(jthread, byteCode);
     }
 
@@ -41,5 +46,15 @@ public class Interpreter {
 //            System.out.println("   localVars:" + frame.getSlots());
         } while (!jthread.isStackEmpty());
 
+    }
+
+    private static AObject createArgsArray(ClassLoader loader, List<String> args) {
+        Class stringClass = loader.loadClass("java/lang/String");
+        AObject argsArr = stringClass.arrayClass().newArray(args.size());
+        AObject[] jArgs = argsArr.refs();
+        for (int i = 0; i < args.size(); i++) {
+            jArgs[i] = StringPool.JString(loader, args.get(i));
+        }
+        return argsArr;
     }
 }

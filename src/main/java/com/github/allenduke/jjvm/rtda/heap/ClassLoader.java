@@ -185,7 +185,9 @@ public class ClassLoader {
                     staticVars.setDouble((int) slotId, d);
                     break;
                 case "Ljava/lang/String;":
-                    assert false; // todo
+                    String str = (String) constantPool.getConstant((int) constValueIndex);
+                    AObject jstr = StringPool.JString(clazz.getClassLoader(), str);
+                    staticVars.setRef((int) slotId, jstr);
             }
         }
     }

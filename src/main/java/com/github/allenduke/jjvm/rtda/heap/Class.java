@@ -228,4 +228,19 @@ public class Class {
         return this.classLoader.loadClass(arrayClassName);
     }
 
+    public AObject newObject() {
+        return AObject.newObject(this);
+    }
+
+    public Field getField(String name, String descriptor, boolean isStatic) {
+        Class cur = this;
+        while (cur != null) {
+            for (Field field : cur.fields) {
+                if (field.isStatic() == isStatic && field.getName().equals(name) && field.getDescriptor().equals(descriptor))
+                    return field;
+            }
+            cur = cur.superClass;
+        }
+        return null;
+    }
 }

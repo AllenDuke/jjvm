@@ -6,6 +6,8 @@ import com.github.allenduke.jjvm.rtda.heap.ClassLoader;
 import com.github.allenduke.jjvm.rtda.heap.Method;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class InstructionsTest {
 
     /**
@@ -20,6 +22,6 @@ public class InstructionsTest {
         ClassLoader classLoader = ClassLoader.newClassLoader(cp);
         Class mainClass = classLoader.loadClass(path);
         Method mainMethod = mainClass.getMainMethod();
-        Interpreter.execute(mainMethod);
+        Interpreter.execute(mainMethod,new ArrayList<>());
     }
 }

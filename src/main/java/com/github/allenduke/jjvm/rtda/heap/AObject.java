@@ -93,4 +93,17 @@ public class AObject {
                 throw new RuntimeException("Not array!");
         }
     }
+
+    public void setRefVar(String name, String descriptor, AObject ref) {
+        Field field = this.clazz.getField(name, descriptor, false);
+        Slots slots = (Slots) data;
+        slots.setRef((int) field.getSlotId(), ref);
+    }
+
+    public AObject getRefVar(String name, String descriptor) {
+        Field field = this.clazz.getField(name, descriptor, false);
+        Slots slots = (Slots) data;
+        return slots.getRef((int) field.getSlotId());
+    }
+
 }

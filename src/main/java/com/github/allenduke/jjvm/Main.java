@@ -6,6 +6,7 @@ import com.github.allenduke.jjvm.rtda.heap.ClassLoader;
 import com.github.allenduke.jjvm.rtda.heap.Method;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author allen
@@ -33,8 +34,9 @@ public class Main {
     private static void startJVM(Args args) {
         String mainClassPath = args.getMainClass().replace(".", File.separator);
         Classpath cp = new Classpath(args.jre, args.classpath);
+        List<String> appArgs = args.getAppArgs();
         System.out.printf("classpath:%s class:%s args:%s\n",
-                cp, args.getMainClass(), args.getAppArgs());
+                cp, args.getMainClass(), appArgs);
         try {
             byte[] classData = cp.readClass(mainClassPath);
 
@@ -52,7 +54,7 @@ public class Main {
             ClassLoader classLoader = ClassLoader.newClassLoader(cp);
             Class mainClass = classLoader.loadClass(mainClassPath);
             Method mainMethod = mainClass.getMainMethod();
-            Interpreter.execute(mainMethod);
+            Interpreter.execute(mainMethod, appArgs);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("could not find or load main class" + args.getMainClass());
