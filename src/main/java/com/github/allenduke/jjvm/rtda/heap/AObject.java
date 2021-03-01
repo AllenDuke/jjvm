@@ -1,8 +1,11 @@
 package com.github.allenduke.jjvm.rtda.heap;
 
+import com.github.allenduke.jjvm.rtda.Slot;
 import com.github.allenduke.jjvm.rtda.Slots;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Arrays;
 
 
 @Getter
@@ -21,7 +24,7 @@ public class AObject {
 
     private Object data;
 
-    private Object extra;
+    private Object extra;   /* 如果当前是一个java.lang.Class对象，extra指向heap.Class */
 
     public static AObject newObject(Class clazz) {
         // todo 通过native，用c语言在堆中new
@@ -106,4 +109,49 @@ public class AObject {
         return slots.getRef((int) field.getSlotId());
     }
 
+    @Override
+    public AObject clone() {
+        AObject aObject = new AObject();
+        aObject.clazz = this.clazz;
+        aObject.data = cloneData();
+        return aObject;
+    }
+
+    private Object cloneData() {
+        switch (this.data.getClass().getSimpleName()) {
+            case "byte[]":
+                byte[] bytes = (byte[]) this.data;
+                return Arrays.copyOf(bytes, bytes.length);
+            case "short[]":
+                short[] shorts = (short[]) this.data;
+                return Arrays.copyOf(shorts, shorts.length);
+            case "char[]":
+                char[] chars = (char[]) this.data;
+                return Arrays.copyOf(chars, chars.length);
+            case "int[]":
+                int[] ints = (int[]) this.data;
+                return Arrays.copyOf(ints, ints.length);
+            case "long[]":
+                long[] longs = (long[]) this.data;
+                return Arrays.copyOf(longs, longs.length);
+            case "float[]":
+                float[] floats = (float[]) this.data;
+                return Arrays.copyOf(floats, floats.length);
+            case "double[]":
+                double[] doubles = (double[]) this.data;
+                return Arrays.copyOf(doubles, doubles.length);
+            case "AObject[]":
+                AObject[] aObjects = (AObject[]) this.data;
+                return Arrays.copyOf(aObjects, aObjects.length);
+            case "Slots":
+                Slots slots = (Slots) this.data;
+                Slot[] slotArr = Arrays.copyOf(slots.getSlots(), slots.getSlots().length);
+                Slots clone = new Slots(0);
+                clone.setSlots(slotArr);
+                return clone;
+            default:
+                throw new RuntimeException("array type err");
+        }
+
+    }
 }

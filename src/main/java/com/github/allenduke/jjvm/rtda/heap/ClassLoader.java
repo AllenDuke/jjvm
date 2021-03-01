@@ -26,17 +26,54 @@ public class ClassLoader {
         ClassLoader classLoader = new ClassLoader();
         classLoader.classpath = classpath;
         classLoader.classMap = new HashMap<>();
+        classLoader.loadBasicClasses();
+        classLoader.loadPrimitiveClasses();
         return classLoader;
+    }
+
+    private void loadPrimitiveClasses() {
+        ClassNameHelper.PRIMITIVE_TYPE_MAP.forEach((primitiveType, descp) -> {
+            loadPrimitiveClass(primitiveType);
+        });
+    }
+
+    // 基本类型的包装类没有父类
+    private void loadPrimitiveClass(String className) {
+        Class clazz = new Class();
+        clazz.setAccessFlags(AccessFlags.ACC_PUBLIC);
+        clazz.setName(className);
+        clazz.setClassLoader(this);
+        clazz.startInit();
+        clazz.setJClass(classMap.get("java/lang/Class").newObject());
+        clazz.getJClass().setExtra(clazz);
+        classMap.put(className, clazz);
+    }
+
+    private void loadBasicClasses() {
+        Class jlClassClass = loadClass("java/lang/Class");
+        classMap.forEach((name, clazz) -> {
+            if (clazz.getJClass() == null) {
+                clazz.setJClass(jlClassClass.newObject());
+                clazz.getJClass().setExtra(clazz);
+            }
+        });
     }
 
     public Class loadClass(String name) {
         name = name.replace(File.separatorChar, '/');
         Class clazz = classMap.get(name);
-        if (clazz == null) {
-            if (name.charAt(0) == '[') clazz = loadArrayClass(name);
-            else clazz = loadNonArrayClass(name);
-            classMap.put(name, clazz);
+        if (clazz != null) return clazz;
+
+        if (name.charAt(0) == '[') clazz = loadArrayClass(name);
+        else clazz = loadNonArrayClass(name);
+
+        Class jlClassClass = classMap.get("java/lang/Class");
+        if (jlClassClass != null) {
+            clazz.setJClass(jlClassClass.newObject());
+            clazz.getJClass().setExtra(clazz);
         }
+
+        classMap.put(name, clazz);
         return clazz;
     }
 

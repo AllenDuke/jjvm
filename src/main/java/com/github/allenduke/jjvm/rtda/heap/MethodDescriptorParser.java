@@ -17,7 +17,6 @@ public class MethodDescriptorParser {
 
 
     public static MethodDescriptor parseMethodDescriptor(String descriptor) {
-
         MethodDescriptorParser parser = new MethodDescriptorParser();
         return parser.parse(descriptor);
     }

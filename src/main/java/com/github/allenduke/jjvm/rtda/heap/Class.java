@@ -42,6 +42,8 @@ public class Class {
 
     private boolean initStarted;        /* 是否已经初始化 */
 
+    private AObject jClass;     /* 自身的镜像 java/lang/Class */
+
     public static Class newClass(ClassFile classFile) {
         Class clazz = new Class();
         clazz.accessFlags = classFile.getAccessFlags();
@@ -242,5 +244,13 @@ public class Class {
             cur = cur.superClass;
         }
         return null;
+    }
+
+    public String getJavaName() {
+        return this.name.replace('/', '.');
+    }
+
+    public boolean isPrimitive() {
+        return ClassNameHelper.PRIMITIVE_TYPE_MAP.containsKey(this.name);
     }
 }

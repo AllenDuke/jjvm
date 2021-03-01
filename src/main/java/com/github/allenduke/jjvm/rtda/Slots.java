@@ -74,4 +74,8 @@ public class Slots {
     public void setSlot(int i, Slot slot) {
         this.slots[i] = slot;
     }
+
+    public AObject getThis(){
+        return getRef(0);
+    }
 }

@@ -228,7 +228,7 @@ public interface Instruction {
 
     /* reserved类指令操作码 */
     int CODE_breakpoint = 202;
-    int CODE_impdep1 = 254;
+    int CODE_invokenative = 254;
     int CODE_impdep2 = 255;
 
     int getOpCode();

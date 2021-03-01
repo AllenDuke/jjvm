@@ -3,10 +3,8 @@ package com.github.allenduke.jjvm.instructions.constants.ldc;
 import com.github.allenduke.jjvm.instructions.base.Index8Instruction;
 import com.github.allenduke.jjvm.rtda.Frame;
 import com.github.allenduke.jjvm.rtda.OperandStack;
-import com.github.allenduke.jjvm.rtda.heap.AObject;
+import com.github.allenduke.jjvm.rtda.heap.*;
 import com.github.allenduke.jjvm.rtda.heap.Class;
-import com.github.allenduke.jjvm.rtda.heap.ConstantPool;
-import com.github.allenduke.jjvm.rtda.heap.StringPool;
 
 /* ldc系列指令从常量池中加载常量，压入操作数栈 */
 public class ldc extends Index8Instruction {
@@ -39,6 +37,9 @@ public class ldc extends Index8Instruction {
                 stack.pushRef(internedStr);
                 break;
             case "ClassRef":
+                ClassRef classRef = (ClassRef) constant;
+                AObject jClassObject = classRef.resolvedClass().getJClass();
+                stack.pushRef(jClassObject);
             default:
                 throw new RuntimeException("todo ldc");
         }

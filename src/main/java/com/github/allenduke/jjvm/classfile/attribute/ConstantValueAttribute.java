@@ -18,16 +18,18 @@ public class ConstantValueAttribute extends AttributeInfo {
 
     @Override
     public AttributeInfo parseAttribute(ClassFile classFile) {
+        ConstantValueAttribute constantValueAttribute = new ConstantValueAttribute();
         if (!getName().equals(getAttributeName())) {
             throw new RuntimeException("parse source file exception");
         }
         if (2 != getInfo().length || 2 != getAttributeLength()) {
             throw new RuntimeException("parse source file exception");
         }
+
         int pool_index = read(2);
-        setIndex(pool_index);   // fixme 原为setIndex(0)
+        constantValueAttribute.setIndex(pool_index);   // fixme 原为setIndex(0)
         ConstantInfo constant = classFile.getConstantPool()[pool_index];
-        setConstantInfo(constant);
-        return this;
+        constantValueAttribute.setConstantInfo(constant);
+        return constantValueAttribute;
     }
 }

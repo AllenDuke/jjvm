@@ -169,59 +169,6 @@ public class ClassReader {
         classFile.setAccessFlags(readU2());
     }
 
-    private String accessFlagsToString(String s) {
-        StringBuilder builder = new StringBuilder();
-        switch (s.charAt(3)) {
-            case '0':
-                break;
-            case '1':
-                builder.append("ACC_PUBLIC").append("    ");
-                break;
-            default:
-                throw new RuntimeException("can not parse access flag");
-        }
-        switch (s.charAt(2)) {
-            case '0':
-                break;
-            case '1':
-                builder.append("ACC_FINAL").append("    ");
-                break;
-            case '2':
-                builder.append("ACC_SUPER").append("    ");
-                break;
-            default:
-                throw new RuntimeException("can not parse access flag");
-        }
-        switch (s.charAt(1)) {
-            case '0':
-                break;
-            case '2':
-                builder.append("ACC_INTERFACE").append("    ");
-                break;
-            case '4':
-                builder.append("ACC_ABSTRACT").append("    ");
-                break;
-            default:
-                throw new RuntimeException("can not parse access flag");
-        }
-        switch (s.charAt(0)) {
-            case '0':
-                break;
-            case '1':
-                builder.append("ACC_SYNTHETIC");
-                break;
-            case '2':
-                builder.append("ACC_ANNOTATION");
-                break;
-            case '4':
-                builder.append("ACC_ENUM");
-                break;
-            default:
-                throw new RuntimeException("can not parse access flag");
-        }
-        return builder.toString();
-    }
-
     private void parseConstantPool(ClassFile classFile) {
         int count = classFile.getConstantPoolCount();
         ConstantInfo[] cpInfos = new ConstantInfo[count];

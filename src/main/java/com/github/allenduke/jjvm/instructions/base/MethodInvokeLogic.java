@@ -26,14 +26,14 @@ public class MethodInvokeLogic {
             }
         }
 
-        if (method.isNative()) {
-            if (method.getName().equals("registerNatives")) {
-                jthread.popFrame();
-            } else {
-                throw new RuntimeException("native method:" + method.getClazz().getName() + " " + method.getName() +
-                        " " + method.getDescriptor());
-            }
-        }
+//        if (method.isNative()) {
+//            if (method.getName().equals("registerNatives")) {
+//                jthread.popFrame();
+//            } else {
+//                throw new RuntimeException("native method:" + method.getClazz().getName() + " " + method.getName() +
+//                        " " + method.getDescriptor());
+//            }
+//        }
     }
 
 

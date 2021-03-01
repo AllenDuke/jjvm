@@ -62,7 +62,9 @@ public abstract class AttributeInfo {
     }
 
     public static AttributeInfo getInstance(String attribute_name) {
-        return map.get(attribute_name);
+        AttributeInfo attributeInfo = map.get(attribute_name);
+//        attributeInfo.index=0;
+        return attributeInfo;
     }
 
 

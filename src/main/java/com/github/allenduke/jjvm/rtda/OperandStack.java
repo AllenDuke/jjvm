@@ -88,4 +88,9 @@ public class OperandStack {     /* 每个方法的操作数栈，在编译时就
     public AObject getRefFromTop(int i) {
         return stacks.get(stacks.size() - 1 - i).getRef();
     }
+
+    public void pushBoolean(boolean b) {
+        if (b) pushInt(1);
+        else pushInt(0);
+    }
 }
